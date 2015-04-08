@@ -3,6 +3,7 @@ package com.mykumi.springlab.chat01;
 import java.sql.SQLException;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
@@ -10,7 +11,8 @@ public class UserDAOTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		//UserDAO userDao = new DaoFactory().userDao();
-		ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
+		//ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 		UserDAO userDao = context.getBean("userDao", UserDAO.class);
 		
 		User user = new User("mykumi", "UC JUNG");
