@@ -6,13 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
+public abstract class UserDAO {
+	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection dbConnection = DriverManager.getConnection(
-				"jdbc:mysql://54.64.47.206/mykumidb", 
-				"dbuser", 
-				"dbuser1*");
+		Connection dbConnection = getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"INSERT INTO users(id, name, password) VALUES(?,?,?)"
 				);
@@ -25,13 +23,9 @@ public class UserDAO {
 		ps.close();
 		dbConnection.close();
 	}
-	
+
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection dbConnection = DriverManager.getConnection(
-				"jdbc:mysql://54.64.47.206/mykumidb", 
-				"dbuser", 
-				"dbuser1*");
+		Connection dbConnection = getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"SELECT id, name, password FROM users WHERE id = ?"
 				);
