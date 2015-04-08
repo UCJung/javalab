@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 public class UserDAO {
 	private DataSource dataSource;
 	
-	public void setConnectionMaker(DataSource dataSource) {
+	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
