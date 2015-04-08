@@ -1,16 +1,19 @@
 package com.mykumi.springlab.chat01;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class UserDAO {
-	public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+	private SimpleConnectionMaker simpleConnectionMaker;
+	
+	public UserDAO() {
+		simpleConnectionMaker = new SimpleConnectionMaker();
+	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
-		Connection dbConnection = getConnection();
+		Connection dbConnection = simpleConnectionMaker.makeNewConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"INSERT INTO users(id, name, password) VALUES(?,?,?)"
 				);
@@ -25,7 +28,7 @@ public abstract class UserDAO {
 	}
 
 	public User get(String id) throws ClassNotFoundException, SQLException {
-		Connection dbConnection = getConnection();
+		Connection dbConnection = simpleConnectionMaker.makeNewConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"SELECT id, name, password FROM users WHERE id = ?"
 				);
