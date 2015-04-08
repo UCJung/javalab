@@ -35,6 +35,7 @@ public class UserDAO {
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"SELECT id, name, password FROM users WHERE id = ?"
 				);
+		ps.setString(1, id);
 		
 		ResultSet rs = ps.executeQuery();
 		rs.next();
