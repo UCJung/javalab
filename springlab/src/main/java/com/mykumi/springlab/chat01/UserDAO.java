@@ -8,8 +8,8 @@ import java.sql.SQLException;
 public class UserDAO {
 	private ConnectionMaker connectionMaker;
 	
-	public UserDAO() {
-		connectionMaker = new NConnectionMaker();
+	public UserDAO(ConnectionMaker connectoinMaker) {
+		this.connectionMaker = connectoinMaker;
 	}
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
