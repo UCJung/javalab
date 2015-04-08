@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SimpleConnectionMaker {
+@Deprecated
+public class SimpleConnectionMaker implements ConnectionMaker {
+	/* (non-Javadoc)
+	 * @see com.mykumi.springlab.chat01.ConnectionMaker#makeNewConnection()
+	 */
+	@Override
 	public Connection makeNewConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection dbConnection = DriverManager.getConnection(
