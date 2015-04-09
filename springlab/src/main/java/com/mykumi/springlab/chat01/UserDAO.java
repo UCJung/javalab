@@ -65,10 +65,10 @@ public class UserDAO {
 		
 		try {
 			dbConnection = dataSource.getConnection();
-			ps = dbConnection.prepareStatement(
-					"DELETE FROM users"
-					);
+			StatementStrategy statementStrategy = new DeleteAllStatementStrategy();
+			ps = statementStrategy.makePreparedStatement(dbConnection);
 			ps.executeUpdate();
+			
 		} catch (SQLException e) {
 			throw e;
 		} finally {
@@ -86,7 +86,7 @@ public class UserDAO {
 			}
 		}
 	}
-	
+
 	public int getCount() throws SQLException {
 		Connection dbConnection = null;
 		PreparedStatement ps = null;
