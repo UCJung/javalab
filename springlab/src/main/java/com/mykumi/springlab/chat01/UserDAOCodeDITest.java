@@ -20,21 +20,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/applicationContext.xml")
-@DirtiesContext
 public class UserDAOCodeDITest {
 	@Autowired
 	private UserDAO userDao;
 
 	@Before
 	public void setUp() {
-		DataSource dataSource = new SingleConnectionDataSource(
-				"jdbc:mysql://54.64.47.206/mykumitestdb","dbuser", "dbuser1*",true);
-		userDao.setDataSource(dataSource);
+
 	}
 	
 	@Test
+	@DirtiesContext
 	public void addAndGet() throws SQLException {
-		System.out.println(this.userDao);
+		DataSource dataSource = new SingleConnectionDataSource(
+				"jdbc:mysql://54.64.47.206/mykumitestdb","dbuser", "dbuser1*",true);
+		userDao.setDataSource(dataSource);
+		
 		userDao.deleteAll();
 		assertThat(userDao.getCount(), is(0));
 		
@@ -66,8 +67,8 @@ public class UserDAOCodeDITest {
 	
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void getFailure() throws SQLException {
-		userDao.deleteAll();
-		assertThat(userDao.getCount(), is(0));
+		//userDao.deleteAll();
+		//assertThat(userDao.getCount(), is(0));
 		
 		userDao.get("unknown_id");
 	}
