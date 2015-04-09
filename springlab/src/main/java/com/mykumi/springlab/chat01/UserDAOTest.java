@@ -13,12 +13,18 @@ public class UserDAOTest {
 		
 		User user = new User("mykumi", "UC JUNG");
 		user.setPassword("111111");
-		
 		userDao.add(user);
-		
 		System.out.println(user.getId() + " success adding");
 		
 		User user2 = userDao.get(user.getId());
-		System.out.println(user2.getId() + " success searching");
+		if (!user.getName().equals(user2.getName())){
+			System.out.println("Fail Test (name)");
+		} 
+		else if (!user.getPassword().equals(user2.getPassword())) {
+			System.out.println("Fail Test (password)");
+		}
+		else {
+			System.out.println(user2.getId() + " success getting");
+		}
 	}
 }
