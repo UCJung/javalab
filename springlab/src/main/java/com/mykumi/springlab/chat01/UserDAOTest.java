@@ -3,18 +3,12 @@ package com.mykumi.springlab.chat01;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.sql.SQLException;
 
-import javax.swing.Spring;
-
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
