@@ -18,8 +18,7 @@ public class UserDAO {
 	}
 	
 	public void add(final User user) throws SQLException {
-		class AddStatementStrategy implements StatementStrategy {
-			@Override
+		StatementStrategy statementStrategy = new StatementStrategy(){
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				PreparedStatement ps = dbConnection.prepareStatement(
@@ -31,9 +30,7 @@ public class UserDAO {
 				
 				return ps;
 			}
-		}		
-		
-		StatementStrategy statementStrategy = new AddStatementStrategy();
+		};
 		jdbcContextWithStatementStrategy(statementStrategy);
 	}
 
