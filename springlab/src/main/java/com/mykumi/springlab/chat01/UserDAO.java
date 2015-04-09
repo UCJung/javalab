@@ -18,18 +18,8 @@ public class UserDAO {
 	}
 	
 	public void add(User user) throws SQLException {
-		Connection dbConnection = dataSource.getConnection();
-		PreparedStatement ps = dbConnection.prepareStatement(
-				"INSERT INTO users(id, name, password) VALUES(?,?,?)"
-				);
-		ps.setString(1, user.getId());
-		ps.setString(2, user.getName());
-		ps.setString(3, user.getPassword());
-		
-		ps.executeUpdate();
-		
-		ps.close();
-		dbConnection.close();
+		StatementStrategy statementStrategy = new AddStatementStrategy(user);
+		jdbcContextWithStatementStrategy(statementStrategy);
 	}
 
 	public User get(String id) throws SQLException {
