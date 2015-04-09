@@ -23,14 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/applicationContext.xml")
 public class UserDAOTest {
 	@Autowired
-	private ApplicationContext context;
-
 	private UserDAO userDao;
-
-	@Before
-	public void setUp() throws BeansException {
-		userDao = context.getBean("userDao", UserDAO.class);
-	}	
 
 	@Test
 	public void addAndGet() throws SQLException {
