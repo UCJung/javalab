@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+
 public class UserDAO {
 	private DataSource dataSource;
 	
@@ -14,7 +16,7 @@ public class UserDAO {
 		this.dataSource = dataSource;
 	}
 	
-	public void add(User user) throws ClassNotFoundException, SQLException {
+	public void add(User user) throws SQLException {
 		Connection dbConnection = dataSource.getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"INSERT INTO users(id, name, password) VALUES(?,?,?)"
@@ -29,7 +31,7 @@ public class UserDAO {
 		dbConnection.close();
 	}
 
-	public User get(String id) throws ClassNotFoundException, SQLException {
+	public User get(String id) throws SQLException {
 		Connection dbConnection = dataSource.getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"SELECT id, name, password FROM users WHERE id = ?"
@@ -37,17 +39,49 @@ public class UserDAO {
 		ps.setString(1, id);
 		
 		ResultSet rs = ps.executeQuery();
-		rs.next();
 		
-		User user = new User(
-				rs.getString("id"), 
-				rs.getString("name"));
-		user.setPassword(rs.getString("password"));
+		User user = null;
+		if (rs.next()) {
+			user = new User(
+					rs.getString("id"), 
+					rs.getString("name"),
+					rs.getString("password"));
+		}
 		
 		rs.close();
 		ps.close();
 		dbConnection.close();
 		
+		if (user == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
 		return user;
+	}
+	
+	public void deleteAll() throws SQLException {
+		Connection dbConnection = dataSource.getConnection();
+		PreparedStatement ps = dbConnection.prepareStatement(
+				"DELETE FROM users"
+				);
+		ps.executeUpdate();
+		
+		ps.close();
+		dbConnection.close();
+	}
+	
+	public int getCount() throws SQLException {
+		Connection dbConnection = dataSource.getConnection();
+		PreparedStatement ps = dbConnection.prepareStatement(
+				"SELECT COUNT(1) FROM users");
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int count = rs.getInt(1);
+		
+		rs.close();
+		ps.close();
+		dbConnection.close();
+		
+		return count;
 	}
 }
