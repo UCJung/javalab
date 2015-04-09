@@ -5,21 +5,30 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.sql.SQLException;
 
+import javax.swing.Spring;
+
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations="/com/mykumi/springlab/chat01/applicationContext.xml")
 public class UserDAOTest {
-	
+	@Autowired
+	private ApplicationContext context;
+
 	private UserDAO userDao;
 
 	@Before
 	public void setUp() throws BeansException {
-		ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
 		userDao = context.getBean("userDao", UserDAO.class);
 	}	
 
