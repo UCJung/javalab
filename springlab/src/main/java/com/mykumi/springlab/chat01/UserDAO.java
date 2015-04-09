@@ -41,8 +41,8 @@ public class UserDAO {
 		
 		User user = new User(
 				rs.getString("id"), 
-				rs.getString("name"));
-		user.setPassword(rs.getString("password"));
+				rs.getString("name"),
+				rs.getString("password"));
 		
 		rs.close();
 		ps.close();
