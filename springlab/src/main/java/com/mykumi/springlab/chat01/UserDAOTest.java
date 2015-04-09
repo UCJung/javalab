@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 public class UserDAOTest {
 
@@ -47,5 +48,16 @@ public class UserDAOTest {
 		
 		userDao.add(new User("u3", "user03", "333333"));
 		assertThat(userDao.getCount(), is(3));
+	}
+	
+	@Test(expected=EmptyResultDataAccessException.class)
+	public void getFailure() throws SQLException {
+		ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
+		UserDAO userDao = context.getBean("userDao", UserDAO.class);
+		
+		userDao.deleteAll();
+		assertThat(userDao.getCount(), is(0));
+		
+		userDao.get("unknown_id");
 	}
 }
