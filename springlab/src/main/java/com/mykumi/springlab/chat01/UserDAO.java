@@ -14,7 +14,7 @@ public class UserDAO {
 		this.dataSource = dataSource;
 	}
 	
-	public void add(User user) throws ClassNotFoundException, SQLException {
+	public void add(User user) throws SQLException {
 		Connection dbConnection = dataSource.getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"INSERT INTO users(id, name, password) VALUES(?,?,?)"
@@ -29,7 +29,7 @@ public class UserDAO {
 		dbConnection.close();
 	}
 
-	public User get(String id) throws ClassNotFoundException, SQLException {
+	public User get(String id) throws SQLException {
 		Connection dbConnection = dataSource.getConnection();
 		PreparedStatement ps = dbConnection.prepareStatement(
 				"SELECT id, name, password FROM users WHERE id = ?"

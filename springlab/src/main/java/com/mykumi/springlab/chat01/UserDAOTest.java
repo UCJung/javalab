@@ -7,7 +7,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class UserDAOTest {
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws SQLException {
 		ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
 		UserDAO userDao = context.getBean("userDao", UserDAO.class);
 		
