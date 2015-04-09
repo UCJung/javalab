@@ -17,10 +17,14 @@ public class UserDAOTest {
 		ApplicationContext context = new GenericXmlApplicationContext("/com/mykumi/springlab/chat01/applicationContext.xml");
 		UserDAO userDao = context.getBean("userDao", UserDAO.class);
 		
+		userDao.deleteAll();
+		assertThat(userDao.getCount(), is(0));
+		
 		User user = new User("mykumi", "UC JUNG");
 		user.setPassword("111111");
 
 		userDao.add(user);
+		assertThat(userDao.getCount(), is(1));
 		
 		User user2 = userDao.get(user.getId());
 		
