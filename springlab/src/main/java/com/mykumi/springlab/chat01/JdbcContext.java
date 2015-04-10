@@ -48,4 +48,19 @@ public class JdbcContext {
 			}		
 		});
 	}	
+	
+	public void excuteSql(final String query, final User user) throws SQLException {
+		workWithStatementStrategy(new StatementStrategy(){
+			public PreparedStatement makePreparedStatement(Connection dbConnection)
+					throws SQLException {
+				PreparedStatement ps = dbConnection.prepareStatement(query);
+				
+				ps.setString(1, user.getId());
+				ps.setString(2, user.getName());
+				ps.setString(3, user.getPassword());
+				
+				return ps;
+			}
+		});
+	}	
 }

@@ -22,19 +22,7 @@ public class UserDAO {
 	}
 	
 	public void add(final User user) throws SQLException {
-		this.jdbcContext.workWithStatementStrategy(new StatementStrategy(){
-			public PreparedStatement makePreparedStatement(Connection dbConnection)
-					throws SQLException {
-				PreparedStatement ps = dbConnection.prepareStatement(
-						"INSERT INTO users(id, name, password) VALUES(?,?,?)"
-						);
-				ps.setString(1, user.getId());
-				ps.setString(2, user.getName());
-				ps.setString(3, user.getPassword());
-				
-				return ps;
-			}
-		});
+		this.jdbcContext.excuteSql("INSERT INTO users(id, name, password) VALUES(?,?,?)", user);
 	}
 
 	public User get(String id) throws SQLException {
