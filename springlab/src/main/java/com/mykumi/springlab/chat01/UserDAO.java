@@ -60,6 +60,13 @@ public class UserDAO {
 	}
 
 	public int getCount() throws SQLException {
-		return this.jdbcContext.executeSelectSql("SELECT COUNT(1) FROM users");
+		return this.jdbcContext.executeSelectSql("SELECT COUNT(1) FROM users", new ExtractStrategy() {
+			@SuppressWarnings("unchecked")
+			public <T> T extractResult(ResultSet rs) throws SQLException {
+				rs.next();
+				Integer result = rs.getInt(1); 
+				return (T) result;
+			}
+		});
 	}
 }

@@ -44,7 +44,7 @@ public class JdbcContext {
 		}
 	}
 	
-	public int selectWithStatementStrategy(StatementStrategy stmt) throws SQLException {
+	public <T> T selectWithStatementStrategy(StatementStrategy stmt, ExtractStrategy extract) throws SQLException {
 		Connection dbConnection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -53,10 +53,10 @@ public class JdbcContext {
 			dbConnection = dataSource.getConnection();
 			ps = stmt.makePreparedStatement(dbConnection);
 			rs = ps.executeQuery();
-			rs.next();
-			return rs.getInt(1);
+			return extract.extractResult(rs);
 		} catch (SQLException e) {
 			throw e;
+			
 		} finally {
 			if (rs != null) {
 				try {
@@ -77,14 +77,14 @@ public class JdbcContext {
 				}
 			}			
 		}
-	}	
-	
+	}
+
 	public void excuteUpdateSql(final String query) throws SQLException {
 		updateWithStatementStrategy(new StatementStrategy() {
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				return dbConnection.prepareStatement(query);
-			}		
+			}
 		});
 	}	
 	
@@ -111,13 +111,13 @@ public class JdbcContext {
 		});
 	}	
 	
-	public int executeSelectSql(final String query) throws SQLException {
+	public <T> T executeSelectSql(final String query, ExtractStrategy extract) throws SQLException {
 		return selectWithStatementStrategy(new StatementStrategy() {
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				PreparedStatement ps = dbConnection.prepareStatement(query);
 				return ps;
 			}
-		});
+		}, extract);
 	}	
 }
