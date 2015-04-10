@@ -22,7 +22,10 @@ public class UserDAO {
 	}
 	
 	public void add(final User user) throws SQLException {
-		this.jdbcContext.excuteSql("INSERT INTO users(id, name, password) VALUES(?,?,?)", user);
+		this.jdbcContext.excuteSql("INSERT INTO users(id, name, password) VALUES(?,?,?)",
+				user.getId(),
+				user.getName(),
+				user.getPassword());
 	}
 
 	public User get(String id) throws SQLException {

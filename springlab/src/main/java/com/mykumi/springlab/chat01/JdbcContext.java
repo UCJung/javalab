@@ -49,16 +49,18 @@ public class JdbcContext {
 		});
 	}	
 	
-	public void excuteSql(final String query, final User user) throws SQLException {
+	public void excuteSql(final String query, final String... params) throws SQLException {
 		workWithStatementStrategy(new StatementStrategy(){
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
-				PreparedStatement ps = dbConnection.prepareStatement(query);
-				
-				ps.setString(1, user.getId());
-				ps.setString(2, user.getName());
-				ps.setString(3, user.getPassword());
-				
+				return setParams(dbConnection.prepareStatement(query), params);
+			}
+			private PreparedStatement setParams(PreparedStatement ps, final String[] params)
+					throws SQLException {
+				int i = 0;
+				for (String param : params) {
+					ps.setString(++i, param);
+				}
 				return ps;
 			}
 		});
