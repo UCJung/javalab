@@ -3,7 +3,6 @@ package com.mykumi.springlab.chat01;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -12,13 +11,18 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 public class UserDAO {
 	private DataSource dataSource;
+	private JdbcContext jdbcContext;
 	
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 	
+	public void setJdbcContext(JdbcContext jdbcContext) {
+		this.jdbcContext = jdbcContext;
+	}
+	
 	public void add(final User user) throws SQLException {
-		jdbcContextWithStatementStrategy(new StatementStrategy(){
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy(){
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				PreparedStatement ps = dbConnection.prepareStatement(
@@ -61,7 +65,7 @@ public class UserDAO {
 	}
 	
 	public void deleteAll() throws SQLException {
-		jdbcContextWithStatementStrategy(new StatementStrategy() {
+		this.jdbcContext.workWithStatementStrategy(new StatementStrategy() {
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 						
@@ -107,31 +111,4 @@ public class UserDAO {
 			}			
 		}
 	}
-
-	public void jdbcContextWithStatementStrategy(StatementStrategy stmt) throws SQLException {
-		Connection dbConnection = null;
-		PreparedStatement ps = null;
-		
-		try {
-			dbConnection = dataSource.getConnection();
-			ps = stmt.makePreparedStatement(dbConnection);
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-				}
-			}		
-			if (dbConnection != null) {
-				try {
-					dbConnection.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-	}	
 }
