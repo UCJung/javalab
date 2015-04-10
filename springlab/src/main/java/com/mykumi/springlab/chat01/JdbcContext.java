@@ -17,7 +17,7 @@ public class JdbcContext {
 		this.dataSource = dataSource;
 	}
 
-	public void workWithStatementStrategy(StatementStrategy stmt) throws SQLException {
+	public void updateWithStatementStrategy(StatementStrategy stmt) throws SQLException {
 		Connection dbConnection = null;
 		PreparedStatement ps = null;
 		
@@ -25,7 +25,6 @@ public class JdbcContext {
 			dbConnection = dataSource.getConnection();
 			ps = stmt.makePreparedStatement(dbConnection);
 			ps.executeUpdate();
-			
 		} catch (SQLException e) {
 			throw e;
 		} finally {
@@ -44,8 +43,8 @@ public class JdbcContext {
 		}
 	}
 	
-	public void excuteSql(final String query) throws SQLException {
-		workWithStatementStrategy(new StatementStrategy() {
+	public void excuteUpdateSql(final String query) throws SQLException {
+		updateWithStatementStrategy(new StatementStrategy() {
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				return dbConnection.prepareStatement(query);
@@ -53,8 +52,8 @@ public class JdbcContext {
 		});
 	}	
 	
-	public void excuteSql(final String query, final Object... params) throws SQLException {
-		workWithStatementStrategy(new StatementStrategy(){
+	public void excuteUpdateSql(final String query, final Object... params) throws SQLException {
+		updateWithStatementStrategy(new StatementStrategy(){
 			public PreparedStatement makePreparedStatement(Connection dbConnection)
 					throws SQLException {
 				return setParams(dbConnection.prepareStatement(query), params);

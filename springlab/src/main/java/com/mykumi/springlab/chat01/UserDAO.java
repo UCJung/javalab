@@ -22,7 +22,7 @@ public class UserDAO {
 	}
 	
 	public void add(final User user) throws SQLException {
-		this.jdbcContext.excuteSql("INSERT INTO users(id, name, password) VALUES(?,?,?)",
+		this.jdbcContext.excuteUpdateSql("INSERT INTO users(id, name, password) VALUES(?,?,?)",
 				user.getId(),
 				user.getName(),
 				user.getPassword());
@@ -56,7 +56,7 @@ public class UserDAO {
 	}
 	
 	public void deleteAll() throws SQLException {
-		this.jdbcContext.excuteSql("DELETE FROM users");
+		this.jdbcContext.excuteUpdateSql("DELETE FROM users");
 	}
 
 	public int getCount() throws SQLException {
