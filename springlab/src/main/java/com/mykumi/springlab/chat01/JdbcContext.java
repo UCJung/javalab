@@ -120,4 +120,26 @@ public class JdbcContext {
 			}
 		}, extract);
 	}	
+	public <T> T executeSelectSql(final String query, ExtractStrategy extract, final Object... params ) throws SQLException {
+		return selectWithStatementStrategy(new StatementStrategy() {
+			public PreparedStatement makePreparedStatement(Connection dbConnection)
+					throws SQLException {
+				return setParams(dbConnection.prepareStatement(query), params);
+			}
+			private PreparedStatement setParams(PreparedStatement ps, Object[] params)
+					throws SQLException {
+				for (int i = 0; i < params.length ; i ++) {
+					Object param = params[i];
+					if (param instanceof SqlParameterValue) {
+						SqlParameterValue paramValue = (SqlParameterValue) param;
+						StatementCreatorUtils.setParameterValue(ps, i + 1, paramValue, paramValue.getValue());
+					}
+					else {
+						StatementCreatorUtils.setParameterValue(ps, i + 1, SqlTypeValue.TYPE_UNKNOWN, param);
+					}					
+				}
+				return ps;
+			}
+		}, extract);
+	}		
 }

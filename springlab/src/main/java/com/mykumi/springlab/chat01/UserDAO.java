@@ -29,30 +29,22 @@ public class UserDAO {
 	}
 
 	public User get(String id) throws SQLException {
-		Connection dbConnection = dataSource.getConnection();
-		PreparedStatement ps = dbConnection.prepareStatement(
-				"SELECT id, name, password FROM users WHERE id = ?"
-				);
-		ps.setString(1, id);
-		
-		ResultSet rs = ps.executeQuery();
-		
-		User user = null;
-		if (rs.next()) {
-			user = new User(
-					rs.getString("id"), 
-					rs.getString("name"),
-					rs.getString("password"));
-		}
-		
-		rs.close();
-		ps.close();
-		dbConnection.close();
-		
-		if (user == null) {
-			throw new EmptyResultDataAccessException(1);
-		}
-		return user;
+		return this.jdbcContext.executeSelectSql("SELECT id, name, password FROM users WHERE id = ?", new ExtractStrategy() {
+			@SuppressWarnings("unchecked")
+			public <T> T extractResult(ResultSet rs) throws SQLException {
+				User user = null;
+				if (rs.next()) {
+					user = new User(
+						rs.getString("id"), 
+						rs.getString("name"),
+						rs.getString("password"));
+				}
+				if (user == null) {
+					throw new EmptyResultDataAccessException(1);
+				}					
+				return (T) user;
+			}
+		}, id);		
 	}
 	
 	public void deleteAll() throws SQLException {
