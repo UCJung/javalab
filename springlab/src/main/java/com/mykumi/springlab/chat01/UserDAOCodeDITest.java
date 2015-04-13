@@ -23,6 +23,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class UserDAOCodeDITest {
 	@Autowired
 	private UserDAO userDao;
+	
+	@Autowired
+	private JdbcContext jdbcContext;	
 
 	@Before
 	public void setUp() {
@@ -34,7 +37,9 @@ public class UserDAOCodeDITest {
 	public void addAndGet() throws SQLException {
 		DataSource dataSource = new SingleConnectionDataSource(
 				"jdbc:mysql://54.64.47.206/mykumitestdb","dbuser", "dbuser1*",true);
-		userDao.setDataSource(dataSource);
+		jdbcContext.setDataSource(dataSource);
+		
+		userDao.setJdbcContext(jdbcContext);
 		
 		userDao.deleteAll();
 		assertThat(userDao.getCount(), is(0));
