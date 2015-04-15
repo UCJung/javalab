@@ -34,6 +34,12 @@ public class CalculatorTest {
 		assertThat(result, is(120));
 	}
 	
+	@Test
+	public void concatenateTest() throws IOException {
+		String result = calculator.concatenate(filepath);
+		assertThat(result, is("12345"));
+	}
+	
 	@Test(expected=FileNotFoundException.class)
 	public void sumTestWithFileNotExist() throws IOException {
 
