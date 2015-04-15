@@ -19,6 +19,7 @@ public class CalculatorTest {
 	public void setUp() {
 		calculator = new Calculator();
 		filepath = getClass().getResource("numbers.txt").getPath();
+		calculator.setFileReadLineContext(new FileReadLineContext());
 	}
 	
 	@Test
