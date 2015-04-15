@@ -9,7 +9,10 @@
 		<property name="username" value="dbuser"></property>
 		<property name="password" value="dbuser1*"></property>
 	</bean>
-	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAO">
+	<bean id="jdbcContext" class="com.mykumi.springlab.chat01.JdbcContext">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAO">
+		<property name="jdbcContext" ref="jdbcContext"></property>
 	</bean>
 </beans>
