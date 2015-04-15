@@ -20,6 +20,10 @@ public class Calculator {
 			}
 		});
 	}
+	
+	public int multiply(String filepath) throws IOException {
+		return 0;
+	}
 
 	public int fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException,
 			NumberFormatException, FileNotFoundException {

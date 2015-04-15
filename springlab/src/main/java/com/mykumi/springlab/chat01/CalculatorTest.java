@@ -6,20 +6,38 @@ import static org.hamcrest.CoreMatchers.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class CalculatorTest {
+	
+	
+	private Calculator calculator;
+	private String filepath;
 
+	@Before
+	public void setUp() {
+		calculator = new Calculator();
+		filepath = getClass().getResource("numbers.txt").getPath();
+	}
+	
 	@Test
 	public void sumTest() throws IOException {
-		Calculator calculator = new Calculator();
-		int result = calculator.sum(getClass().getResource("numbers.txt").getPath());
+		
+		int result = calculator.sum(filepath);
 		assertThat(result, is(15));
+	}
+	
+	@Test
+	public void multiplyTest() throws IOException {
+		int result = calculator.multiply(filepath);
+		assertThat(result, is(120));
 	}
 	
 	@Test(expected=FileNotFoundException.class)
 	public void sumTestWithFileNotExist() throws IOException {
-		Calculator calculator = new Calculator();
-		calculator.sum("c:\\hellow.txt");
+
+		String failFilePath = "c:\\hellow.txt";
+		calculator.sum(failFilePath);
 	}
 }
