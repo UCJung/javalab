@@ -22,7 +22,18 @@ public class Calculator {
 	}
 	
 	public int multiply(String filepath) throws IOException {
-		return 0;
+		return fileReadTemplate(filepath, new BufferedReaderCallback() {
+			@Override
+			public Integer calculateWithBufferedReader(BufferedReader br)
+					throws IOException {
+				Integer ret = 1;
+				String line = null;
+				while ((line = br.readLine()) != null) {
+					ret *= Integer.valueOf(line); 
+				}
+				return ret;
+			}
+		});
 	}
 
 	public int fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException,
