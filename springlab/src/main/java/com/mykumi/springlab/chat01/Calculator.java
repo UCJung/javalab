@@ -7,37 +7,24 @@ import java.io.IOException;
 
 public class Calculator {
 	public int sum(String filepath) throws IOException {
-		return fileReadTemplate(filepath, new BufferedReaderCallback() {
+		return lineReadTemplate(filepath, new LineReadCallback() {
 			@Override
-			public Integer calculateWithBufferedReader(BufferedReader br)
-					throws IOException {
-				Integer ret = 0;
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					ret += Integer.valueOf(line); 
-				}
-				return ret;
+			public Integer calculateWithLine(String line, Integer value) {
+				return value + Integer.valueOf(line);
 			}
-		});
+		}, 0);
 	}
 	
 	public int multiply(String filepath) throws IOException {
-		return fileReadTemplate(filepath, new BufferedReaderCallback() {
+		return lineReadTemplate(filepath, new LineReadCallback() {
 			@Override
-			public Integer calculateWithBufferedReader(BufferedReader br)
-					throws IOException {
-				Integer ret = 1;
-				String line = null;
-				while ((line = br.readLine()) != null) {
-					ret *= Integer.valueOf(line); 
-				}
-				return ret;
+			public Integer calculateWithLine(String line, Integer value) {
+				return value * Integer.valueOf(line);
 			}
-		});
+		}, 1);
 	}
 
-	public int fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException,
-			NumberFormatException, FileNotFoundException {
+	public int fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException {
 		BufferedReader br = null;
 		Integer ret = 0;
 		try {
@@ -54,4 +41,25 @@ public class Calculator {
 			}
 		}
 	}
+	
+	public int lineReadTemplate(String filepath, LineReadCallback callback, int initValue) throws IOException {
+		BufferedReader br = null;
+		Integer ret = initValue;
+		try {
+			br = new BufferedReader(new FileReader(filepath));
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				ret = callback.calculateWithLine(line, ret);
+			}
+			return ret;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (br != null) {
+				try { br.close(); } 
+				catch (Exception e) {}
+			}
+		}
+	}	
 }
