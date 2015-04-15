@@ -7,16 +7,27 @@ import java.io.IOException;
 
 public class Calculator {
 	public int sum(String filepath) throws IOException {
-		return fileReadTemplate(filepath);
+		return fileReadTemplate(filepath, new BufferedReaderCallback() {
+			@Override
+			public Integer calculateWithBufferedReader(BufferedReader br)
+					throws IOException {
+				Integer ret = 0;
+				String line = null;
+				while ((line = br.readLine()) != null) {
+					ret += Integer.valueOf(line); 
+				}
+				return ret;
+			}
+		});
 	}
 
-	public int fileReadTemplate(String filepath) throws IOException,
+	public int fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException,
 			NumberFormatException, FileNotFoundException {
 		BufferedReader br = null;
 		Integer ret = 0;
 		try {
 			br = new BufferedReader(new FileReader(filepath));
-			ret = calcSumWithBufferedRead(br, ret);
+			ret = callback.calculateWithBufferedReader(br);
 			return ret;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -27,14 +38,5 @@ public class Calculator {
 				catch (Exception e) {}
 			}
 		}
-	}
-
-	public Integer calcSumWithBufferedRead(BufferedReader br, Integer ret)
-			throws IOException, NumberFormatException {
-		String line = null;
-		while ((line = br.readLine()) != null) {
-			ret += Integer.valueOf(line); 
-		}
-		return ret;
 	}
 }
