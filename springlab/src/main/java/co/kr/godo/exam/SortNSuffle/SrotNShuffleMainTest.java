@@ -5,12 +5,12 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
-public class SrotNSuffleMainTest {
+public class SrotNShuffleMainTest {
 
 	@Test
 	public void testSrotNSuffle() {
 		String inputString = "4ac13bd2";
-		SortNSuffle sortNSuffle = new SortNSuffle(inputString);
+		SortNShuffle sortNSuffle = new SortNShuffle(inputString);
 		
 		String result = sortNSuffle.doing(new NumberCharacterShuffleStrategy());
 		
@@ -20,7 +20,7 @@ public class SrotNSuffleMainTest {
 	@Test
 	public void collectPatternString() {
 		String inputString = "4ac13bd2";
-		SortNSuffle sortNSuffle = new SortNSuffle(inputString);
+		SortNShuffle sortNSuffle = new SortNShuffle(inputString);
 		
 		String testNumber = sortNSuffle.collectPatternString("\\d+");
 		assertThat(testNumber, is("4132"));
@@ -32,7 +32,7 @@ public class SrotNSuffleMainTest {
 	@Test
 	public void getSortedArrayTest() {
 		String inputString = "4ac13bd2";
-		SortNSuffle sortNSuffle = new SortNSuffle(inputString);
+		SortNShuffle sortNSuffle = new SortNShuffle(inputString);
 		
 		char[] sortedString =sortNSuffle.getSortedArray(inputString);
 		assertThat(sortedString.length, is(8));

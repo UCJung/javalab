@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SortNSuffle {
+public class SortNShuffle {
 
 	private String inputString;
 	private String regexNumber;
 	private String regexCharacter;
 
-	public SortNSuffle(String inputString) {
+	public SortNShuffle(String inputString) {
 		this.inputString = inputString;
 		this.regexNumber = "\\d+";
 		this.regexCharacter = "[a-zA-Z]+";		
 	}
 	
-	public SortNSuffle(String inputString, String regexNumber, String regexCharacter) {
+	public SortNShuffle(String inputString, String regexNumber, String regexCharacter) {
 		this.inputString = inputString;
 		this.regexNumber = regexNumber;
 		this.regexCharacter = regexCharacter;

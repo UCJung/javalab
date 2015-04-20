@@ -2,10 +2,10 @@ package co.kr.godo.exam.SortNSuffle;
 
 import java.util.Scanner;
 
-public class SrotNSuffleMain {
+public class SrotNShuffleMain {
     public static void main(String[] args) {
         String inputString = getSystemInputString();
-        SortNSuffle sortNSuffle = new SortNSuffle();
+        SortNShuffle sortNSuffle = new SortNShuffle();
         System.out.println(sortNSuffle.doing(inputString, new NumberCharacterShuffleStrategy()));
     }
 
