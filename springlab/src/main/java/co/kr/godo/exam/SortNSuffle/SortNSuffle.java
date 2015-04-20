@@ -6,9 +6,25 @@ import java.util.regex.Pattern;
 
 public class SortNSuffle {
 
-	public String doing(String inputString, ShuffleStrategy stgy) {
-		String numbers = collectPatternString(inputString, "\\d+");
-	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
+	private String inputString;
+	private String regexNumber;
+	private String regexCharacter;
+
+	public SortNSuffle(String inputString) {
+		this.inputString = inputString;
+		this.regexNumber = "\\d+";
+		this.regexCharacter = "[a-zA-Z]+";		
+	}
+	
+	public SortNSuffle(String inputString, String regexNumber, String regexCharacter) {
+		this.inputString = inputString;
+		this.regexNumber = regexNumber;
+		this.regexCharacter = regexCharacter;
+	}
+	
+	public String doing(ShuffleStrategy stgy) {
+		String numbers = collectPatternString(regexNumber);
+		String characters = collectPatternString(regexCharacter);
 	
 	    char[] chars = getSortedArray(characters);
 	    char[] nums = getSortedArray(numbers);
@@ -22,7 +38,7 @@ public class SortNSuffle {
 		return chars;
 	}
 
-	public String collectPatternString(String inputString, String regex) {
+	public String collectPatternString(String regex) {
 		Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(inputString);
 	    StringBuilder sbResult = new StringBuilder();
