@@ -11,12 +11,8 @@ public class SortNSuffle {
 	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
 	
 	    // covert string to character array
-	    char[] chars = characters.toString().toCharArray();
-	    char[] nums = numbers.toString().toCharArray();
-	
-	    // sort character array
-	    Arrays.sort(chars);
-	    Arrays.sort(nums);
+	    char[] chars = getSortedArray(characters);
+	    char[] nums = getSortedArray(numbers);
 	
 	    // print result
 	    int charsLength = chars.length;
@@ -29,6 +25,12 @@ public class SortNSuffle {
 	    }
 	    
 	    return sbResult.toString();
+	}
+
+	public char[] getSortedArray(String input) {
+		char[] chars = input.toString().toCharArray();
+	    Arrays.sort(chars);
+		return chars;
 	}
 
 	public String collectPatternString(String inputString, String regex) {

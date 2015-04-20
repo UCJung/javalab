@@ -29,4 +29,18 @@ public class SrotNSuffleMainTest {
 		String testCharacter = sortNSuffle.collectPatternString(inputString,"[a-zA-Z]+");
 		assertThat(testCharacter, is("acbd"));
 	}
+	
+	@Test
+	public void getSortedArrayTest() {
+		String input = "abdec";
+		SortNSuffle sortNSuffle = new SortNSuffle();
+		
+		char[] sortedString =sortNSuffle.getSortedArray(input);
+		assertThat(sortedString.length, is(5));
+		assertThat(sortedString[0],is('a'));
+		assertThat(sortedString[1],is('b'));
+		assertThat(sortedString[2],is('c'));
+		assertThat(sortedString[3],is('d'));
+		assertThat(sortedString[4],is('e'));
+	}
 }
