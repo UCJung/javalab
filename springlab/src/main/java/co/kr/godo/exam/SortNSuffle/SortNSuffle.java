@@ -10,12 +10,15 @@ public class SortNSuffle {
 		String numbers = collectPatternString(inputString, "\\d+");
 	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
 	
-	    // covert string to character array
 	    char[] chars = getSortedArray(characters);
 	    char[] nums = getSortedArray(numbers);
 	
-	    // print result
-	    int charsLength = chars.length;
+	    String result = getShuffleString(chars, nums);
+	    return result.toString();
+	}
+
+	public String getShuffleString(char[] chars, char[] nums) {
+		int charsLength = chars.length;
 	    int numsLength = nums.length;
 	    int limit = (charsLength > numsLength) ? charsLength : numsLength;
 	    StringBuilder sbResult = new StringBuilder();
@@ -23,8 +26,7 @@ public class SortNSuffle {
 	        if (numsLength > i ) sbResult.append(nums[i]);
 	        if (charsLength > i ) sbResult.append(chars[i]);
 	    }
-	    
-	    return sbResult.toString();
+		return sbResult.toString();
 	}
 
 	public char[] getSortedArray(String input) {
