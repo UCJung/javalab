@@ -11,7 +11,7 @@ public class SrotNSuffleMainTest {
 	public void testSrotNSuffle() {
 		String input = "4ac13bd2";
 		String result = new String();
-		SortNSuffle sortNSuffle = new srotNSuffle();
+		SortNSuffle sortNSuffle = new SortNSuffle();
 		
 		result = sortNSuffle.doing(input);
 		
