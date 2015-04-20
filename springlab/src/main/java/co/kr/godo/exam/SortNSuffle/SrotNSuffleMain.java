@@ -10,7 +10,7 @@ public class SrotNSuffleMain {
         String inputString = scanInputString.nextLine();
         SortNSuffle sortNSuffle = new SortNSuffle();
         
-        String result = sortNSuffle.doing(inputString);
+        String result = sortNSuffle.doing(inputString, null);
         System.out.println(result);
     }
 }

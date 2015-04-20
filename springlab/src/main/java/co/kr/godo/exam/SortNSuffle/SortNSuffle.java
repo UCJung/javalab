@@ -6,27 +6,15 @@ import java.util.regex.Pattern;
 
 public class SortNSuffle {
 
-	public String doing(String inputString) {
+	public String doing(String inputString, SuffleStrategy stgy) {
 		String numbers = collectPatternString(inputString, "\\d+");
 	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
 	
 	    char[] chars = getSortedArray(characters);
 	    char[] nums = getSortedArray(numbers);
 	
-	    String result = getShuffleString(chars, nums);
+	    String result = stgy.getShuffleString(chars, nums);
 	    return result.toString();
-	}
-
-	public String getShuffleString(char[] chars, char[] nums) {
-		int charsLength = chars.length;
-	    int numsLength = nums.length;
-	    int limit = (charsLength > numsLength) ? charsLength : numsLength;
-	    StringBuilder sbResult = new StringBuilder();
-	    for ( int i = 0 ; i < limit ; i ++ ){
-	        if (numsLength > i ) sbResult.append(nums[i]);
-	        if (charsLength > i ) sbResult.append(chars[i]);
-	    }
-		return sbResult.toString();
 	}
 
 	public char[] getSortedArray(String input) {
