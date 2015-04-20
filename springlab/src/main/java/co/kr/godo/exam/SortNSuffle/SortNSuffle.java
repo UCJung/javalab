@@ -7,21 +7,8 @@ import java.util.regex.Pattern;
 public class SortNSuffle {
 
 	public String doing(String inputString) {
-		// collect number string
-	    Pattern numberPattern = Pattern.compile("\\d+");
-	    Matcher matcher = numberPattern.matcher(inputString);
-	    StringBuilder numbers = new StringBuilder();
-	    while(matcher.find()) {
-	        numbers.append(matcher.group());
-	    }
-	
-	    // collect character string
-	    Pattern characterPattern = Pattern.compile("[a-zA-Z]+");
-	    matcher = characterPattern.matcher(inputString);
-	    StringBuilder characters = new StringBuilder();
-	    while(matcher.find()) {
-	        characters.append(matcher.group());
-	    }
+		String numbers = collectPatternString(inputString, "\\d+");
+	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
 	
 	    // covert string to character array
 	    char[] chars = characters.toString().toCharArray();
@@ -44,4 +31,14 @@ public class SortNSuffle {
 	    return sbResult.toString();
 	}
 
+	public String collectPatternString(String inputString, String regex) {
+		// collect character string
+		Pattern pattern = Pattern.compile(regex);
+	    Matcher matcher = pattern.matcher(inputString);
+	    StringBuilder sbResult = new StringBuilder();
+	    while(matcher.find()) {
+	        sbResult.append(matcher.group());
+	    }
+		return sbResult.toString();
+	}
 }

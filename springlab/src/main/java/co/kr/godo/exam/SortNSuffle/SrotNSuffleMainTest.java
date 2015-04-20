@@ -9,12 +9,24 @@ public class SrotNSuffleMainTest {
 
 	@Test
 	public void testSrotNSuffle() {
-		String input = "4ac13bd2";
+		String inputString = "4ac13bd2";
 		String result = new String();
 		SortNSuffle sortNSuffle = new SortNSuffle();
 		
-		result = sortNSuffle.doing(input);
+		result = sortNSuffle.doing(inputString);
 		
 		assertThat(result, is("1a2b3c4d"));
+	}
+	
+	@Test
+	public void collectPatternString() {
+		String inputString = "4ac13bd2";
+		SortNSuffle sortNSuffle = new SortNSuffle();
+		
+		String testNumber = sortNSuffle.collectPatternString(inputString, "\\d+");
+		assertThat(testNumber, is("4132"));
+		
+		String testCharacter = sortNSuffle.collectPatternString(inputString,"[a-zA-Z]+");
+		assertThat(testCharacter, is("acbd"));
 	}
 }
