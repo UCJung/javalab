@@ -7,26 +7,28 @@ import org.junit.Test;
 
 public class SrotNSuffleMainTest {
 
+	private class NumberCharacterShuffleStrategy implements SuffleStrategy {
+		@Override
+		public String getShuffleString(char[] chars, char[] nums) {
+			int charsLength = chars.length;
+		    int numsLength = nums.length;
+		    int limit = (charsLength > numsLength) ? charsLength : numsLength;
+		    StringBuilder sbResult = new StringBuilder();
+		    for ( int i = 0 ; i < limit ; i ++ ){
+		        if (numsLength > i ) sbResult.append(nums[i]);
+		        if (charsLength > i ) sbResult.append(chars[i]);
+		    }
+			return sbResult.toString();
+		}
+	}
+
 	@Test
 	public void testSrotNSuffle() {
 		String inputString = "4ac13bd2";
 		String result = new String();
 		SortNSuffle sortNSuffle = new SortNSuffle();
 		
-		result = sortNSuffle.doing(inputString, new SuffleStrategy() {
-			@Override
-			public String getShuffleString(char[] chars, char[] nums) {
-				int charsLength = chars.length;
-			    int numsLength = nums.length;
-			    int limit = (charsLength > numsLength) ? charsLength : numsLength;
-			    StringBuilder sbResult = new StringBuilder();
-			    for ( int i = 0 ; i < limit ; i ++ ){
-			        if (numsLength > i ) sbResult.append(nums[i]);
-			        if (charsLength > i ) sbResult.append(chars[i]);
-			    }
-				return sbResult.toString();
-			}
-		});
+		result = sortNSuffle.doing(inputString, new NumberCharacterShuffleStrategy());
 		
 		assertThat(result, is("1a2b3c4d"));
 	}
