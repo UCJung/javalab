@@ -13,8 +13,7 @@ public class SortNSuffle {
 	    char[] chars = getSortedArray(characters);
 	    char[] nums = getSortedArray(numbers);
 	
-	    String result = stgy.getShuffleString(chars, nums);
-	    return result.toString();
+	    return stgy.getShuffleString(nums,chars);
 	}
 
 	public char[] getSortedArray(String input) {
@@ -24,7 +23,6 @@ public class SortNSuffle {
 	}
 
 	public String collectPatternString(String inputString, String regex) {
-		// collect character string
 		Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(inputString);
 	    StringBuilder sbResult = new StringBuilder();
