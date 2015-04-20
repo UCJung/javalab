@@ -1,6 +1,6 @@
 package co.kr.godo.exam.SortNSuffle;
 
-class NumberCharacterShuffleStrategy implements SuffleStrategy {
+class NumberCharacterShuffleStrategy extends SuffleStrategy {
 	@Override
 	public String getShuffleString(char[]... chars) {
 		StringBuilder sbResult = new StringBuilder();
@@ -11,13 +11,5 @@ class NumberCharacterShuffleStrategy implements SuffleStrategy {
 	    	}
 	    }
 		return sbResult.toString();
-	}
-
-	public int getMaxLength(char[]... chars) {
-		int maxSize = 0;
-		for (char[] member : chars) {
-			maxSize = ( maxSize < member.length ) ? member.length : maxSize;  
-		}
-		return maxSize;
 	}
 }
