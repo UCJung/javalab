@@ -1,6 +1,6 @@
 package co.kr.godo.exam.SortNSuffle;
 
-class NumberCharacterShuffleStrategy extends SuffleStrategy {
+class NumberCharacterShuffleStrategy extends ShuffleStrategy {
 	@Override
 	public String getShuffleString(char[]... chars) {
 		StringBuilder sbResult = new StringBuilder();

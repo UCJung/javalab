@@ -1,6 +1,6 @@
 package co.kr.godo.exam.SortNSuffle;
 
-public abstract class SuffleStrategy {
+public abstract class ShuffleStrategy {
 
 	public abstract String getShuffleString(char[]... chars);
 

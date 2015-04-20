@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class SortNSuffle {
 
-	public String doing(String inputString, SuffleStrategy stgy) {
+	public String doing(String inputString, ShuffleStrategy stgy) {
 		String numbers = collectPatternString(inputString, "\\d+");
 	    String characters = collectPatternString(inputString,"[a-zA-Z]+");
 	
