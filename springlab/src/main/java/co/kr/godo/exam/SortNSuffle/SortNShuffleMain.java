@@ -2,7 +2,7 @@ package co.kr.godo.exam.SortNSuffle;
 
 import java.util.Scanner;
 
-public class SrotNShuffleMain {
+public class SortNShuffleMain {
     public static void main(String[] args) {
         String inputString = getSystemInputString();
         SortNShuffle sortNSuffle = new SortNShuffle(inputString);

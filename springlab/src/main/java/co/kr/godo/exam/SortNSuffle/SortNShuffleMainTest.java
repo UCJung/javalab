@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
 
-public class SrotNShuffleMainTest {
+public class SortNShuffleMainTest {
 
 	@Test
 	public void testSrotNSuffle() {
