@@ -22,11 +22,9 @@ public class SrotNShuffleMainTest {
 		String inputString = "4ac13bd2";
 		SortNShuffle sortNSuffle = new SortNShuffle(inputString);
 		
-		String testNumber = sortNSuffle.collectPatternString("\\d+");
-		assertThat(testNumber, is("4132"));
+		sortNSuffle.setExtractor("\\d+", "[a-zA-Z]+");
+		assertThat(sortNSuffle.doing(new NumberCharacterShuffleStrategy()), is("1a2b3c4d"));
 		
-		String testCharacter = sortNSuffle.collectPatternString("[a-zA-Z]+");
-		assertThat(testCharacter, is("acbd"));
 	}
 	
 	@Test
@@ -34,15 +32,32 @@ public class SrotNShuffleMainTest {
 		String inputString = "4ac13bd2";
 		SortNShuffle sortNSuffle = new SortNShuffle(inputString);
 		
-		char[] sortedString =sortNSuffle.getSortedArray(inputString);
-		assertThat(sortedString.length, is(8));
-		assertThat(sortedString[0],is('1'));
-		assertThat(sortedString[1],is('2'));
-		assertThat(sortedString[2],is('3'));
-		assertThat(sortedString[3],is('4'));
-		assertThat(sortedString[4],is('a'));
-		assertThat(sortedString[5],is('b'));
-		assertThat(sortedString[6],is('c'));
-		assertThat(sortedString[7],is('d'));
+		StringExtractor se1 = new StringExtractor("\\d+");
+		se1.extractPatternString(inputString);
+		assertThat(se1.getExtractedString(), is("4132"));
+		
+		se1.exTractStringToSortedArray();
+		char[] se1srotedArray = se1.getSortedArray();
+		assertThat(se1srotedArray.length, is(4));
+		assertThat(se1srotedArray[0],is('1'));
+		assertThat(se1srotedArray[1],is('2'));
+		assertThat(se1srotedArray[2],is('3'));
+		assertThat(se1srotedArray[3],is('4'));
+		
+		
+		StringExtractor se2 = new StringExtractor("[a-zA-Z]+");
+
+		se2.extractPatternString(inputString);
+		assertThat(se2.getExtractedString(), is("acbd")); 
+		
+		se2.exTractStringToSortedArray();
+		char[] se2srotedArray = se2.getSortedArray();
+		assertThat(se2srotedArray.length, is(4));
+		assertThat(se2srotedArray[0],is('a'));
+		assertThat(se2srotedArray[1],is('b'));
+		assertThat(se2srotedArray[2],is('c'));
+		assertThat(se2srotedArray[3],is('d'));
+		
+		assertThat(sortNSuffle.doing(new NumberCharacterShuffleStrategy()),is("1a2b3c4d")); 
 	}
 }

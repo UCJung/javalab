@@ -1,50 +1,52 @@
 package co.kr.godo.exam.SortNSuffle;
 
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SortNShuffle {
-
 	private String inputString;
-	private String regexNumber;
-	private String regexCharacter;
-
+	private List<StringExtractor> stringExtractors = new ArrayList<StringExtractor>(); 
+	
 	public SortNShuffle(String inputString) {
 		this.inputString = inputString;
-		this.regexNumber = "\\d+";
-		this.regexCharacter = "[a-zA-Z]+";		
+		this.setExtractor("\\d+", "[a-zA-Z]+");
 	}
 	
-	public SortNShuffle(String inputString, String regexNumber, String regexCharacter) {
+	public SortNShuffle(String inputString, String... regexs) {
 		this.inputString = inputString;
-		this.regexNumber = regexNumber;
-		this.regexCharacter = regexCharacter;
+		this.setExtractor(regexs);
+	}
+	
+	public void setExtractor(String... regexs) {
+		this.clearAllExtractor();
+		for (String regex : regexs) {
+			this.addExtractor(regex);
+		}
+	}
+	
+	public void addExtractor(String regex) {
+		stringExtractors.add(new StringExtractor(regex));
+	}
+	
+	public void clearAllExtractor() {
+		this.stringExtractors.clear();
 	}
 	
 	public String doing(ShuffleStrategy stgy) {
-		String numbers = collectPatternString(regexNumber);
-		String characters = collectPatternString(regexCharacter);
-	
-	    char[] chars = getSortedArray(characters);
-	    char[] nums = getSortedArray(numbers);
-	
-	    return stgy.getShuffleString(nums,chars);
+		collectPatternString();
+		getSortedArray();
+	    return stgy.getShuffleString(stringExtractors);
 	}
 
-	public char[] getSortedArray(String input) {
-		char[] chars = input.toString().toCharArray();
-	    Arrays.sort(chars);
-		return chars;
+	public void getSortedArray() {
+		for (StringExtractor se : stringExtractors) {
+			se.exTractStringToSortedArray();
+		}
 	}
 
-	public String collectPatternString(String regex) {
-		Pattern pattern = Pattern.compile(regex);
-	    Matcher matcher = pattern.matcher(inputString);
-	    StringBuilder sbResult = new StringBuilder();
-	    while(matcher.find()) {
-	        sbResult.append(matcher.group());
-	    }
-		return sbResult.toString();
+	public void collectPatternString() {
+		for (StringExtractor se : stringExtractors) {
+			se.extractPatternString(inputString);
+		}
 	}
 }

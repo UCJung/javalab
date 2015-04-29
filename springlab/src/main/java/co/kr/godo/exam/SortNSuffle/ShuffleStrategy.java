@@ -1,13 +1,15 @@
 package co.kr.godo.exam.SortNSuffle;
 
+import java.util.List;
+
 public abstract class ShuffleStrategy {
 
-	public abstract String getShuffleString(char[]... chars);
-
-	protected int getMaxLength(char[]... chars) {
+	public abstract String getShuffleString(List<StringExtractor> stringExtractors);
+	protected int getMaxLength(List<StringExtractor> stringExtractors) {
 		int maxSize = 0;
-		for (char[] member : chars) {
-			maxSize = ( maxSize < member.length ) ? member.length : maxSize;  
+		for (StringExtractor member : stringExtractors) {
+			char[] sorted = member.getSortedArray();
+			maxSize = ( maxSize < sorted.length ) ? sorted.length : maxSize;  
 		}
 		return maxSize;
 	}
