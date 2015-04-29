@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class SrotNShuffleMain {
     public static void main(String[] args) {
         String inputString = getSystemInputString();
-        SortNShuffle sortNSuffle = new SortNShuffle();
-        System.out.println(sortNSuffle.doing(inputString, new NumberCharacterShuffleStrategy()));
+        SortNShuffle sortNSuffle = new SortNShuffle(inputString);
+        System.out.println(sortNSuffle.doing(new NumberCharacterShuffleStrategy()));
     }
 
 	@SuppressWarnings("resource")
