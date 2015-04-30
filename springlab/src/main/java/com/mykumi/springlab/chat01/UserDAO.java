@@ -2,6 +2,7 @@ package com.mykumi.springlab.chat01;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -46,7 +47,20 @@ public class UserDAO {
 		this.jdbcTemplate.update("DELETE FROM users");
 	}
 
-	public int getCount() throws SQLException {
+	public int getCount() {
 		return this.jdbcTemplate.queryForObject("SELECT COUNT(1) FROM users", Integer.class);
+	}
+
+	public List<User> getAll() {
+		return this.jdbcTemplate.query("SELECT * FROM users order by id",
+				new RowMapper<User>() {
+					public User mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						return new User(
+								rs.getString("id"), 
+								rs.getString("name"),
+								rs.getString("password"));
+					}
+				});
 	}
 }
