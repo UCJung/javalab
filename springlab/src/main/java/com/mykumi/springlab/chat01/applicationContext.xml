@@ -18,7 +18,6 @@
 	</bean>
 		
 	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAO">
-		<property name="jdbcContext" ref="jdbcContext"></property>
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 </beans>

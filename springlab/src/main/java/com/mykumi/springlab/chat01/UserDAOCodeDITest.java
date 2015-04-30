@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -38,8 +39,8 @@ public class UserDAOCodeDITest {
 		DataSource dataSource = new SingleConnectionDataSource(
 				"jdbc:mysql://54.64.47.206/mykumitestdb","dbuser", "dbuser1*",true);
 		jdbcContext.setDataSource(dataSource);
-		
-		userDao.setJdbcContext(jdbcContext);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		userDao.setJdbcTemplate(jdbcTemplate);
 		
 		userDao.deleteAll();
 		assertThat(userDao.getCount(), is(0));
