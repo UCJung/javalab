@@ -1,21 +1,17 @@
 package com.mykumi.springlab.chat01;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 public class UserDAO {
 	private JdbcContext jdbcContext;
 	private JdbcTemplate jdbcTemplate;
 	
-	public void setJdbcTemplate(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	public void setJdbcContext(JdbcContext jdbcContext) {
@@ -29,23 +25,18 @@ public class UserDAO {
 				user.getPassword());
 	}
 
-	public User get(String id) throws SQLException {
-		return this.jdbcContext.executeSelectSql("SELECT id, name, password FROM users WHERE id = ?", new ExtractStrategy() {
-			@SuppressWarnings("unchecked")
-			public <T> T extractResult(ResultSet rs) throws SQLException {
-				User user = null;
-				if (rs.next()) {
-					user = new User(
-						rs.getString("id"), 
-						rs.getString("name"),
-						rs.getString("password"));
-				}
-				if (user == null) {
-					throw new EmptyResultDataAccessException(1);
-				}					
-				return (T) user;
-			}
-		}, id);		
+	public User get(String id) {
+		return this.jdbcTemplate.queryForObject("SELECT id, name, password FROM users WHERE id = ?", 
+				new Object[] {id},
+				new RowMapper<User>() {
+					public User mapRow(ResultSet rs,
+							int rowNum) throws SQLException {
+						return new User(
+								rs.getString("id"), 
+								rs.getString("name"),
+								rs.getString("password"));
+					}
+				});
 	}
 	
 	public void deleteAll() {
@@ -61,13 +52,6 @@ public class UserDAO {
 	}
 
 	public int getCount() throws SQLException {
-		return this.jdbcContext.executeSelectSql("SELECT COUNT(1) FROM users", new ExtractStrategy() {
-			@SuppressWarnings("unchecked")
-			public <T> T extractResult(ResultSet rs) throws SQLException {
-				rs.next();
-				Integer result = rs.getInt(1); 
-				return (T) result;
-			}
-		});
+		return this.jdbcTemplate.queryForObject("SELECT COUNT(1) FROM users", Integer.class);
 	}
 }

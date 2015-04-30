@@ -12,7 +12,13 @@
 	<bean id="jdbcContext" class="com.mykumi.springlab.chat01.JdbcContext">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+		
 	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAO">
 		<property name="jdbcContext" ref="jdbcContext"></property>
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 </beans>
