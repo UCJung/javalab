@@ -34,26 +34,10 @@ public class UserDAO {
 	public User get(String id) {
 		return this.jdbcTemplate.queryForObject("SELECT id, name, password FROM users WHERE id = ?", 
 				new Object[] {id},
-				new RowMapper<User>() {
-					public User mapRow(ResultSet rs,
-							int rowNum) throws SQLException {
-						return new User(
-								rs.getString("id"), 
-								rs.getString("name"),
-								rs.getString("password"));
-					}
-				});
+				new UserRowMapper());
 	}
 	
 	public void deleteAll() {
-		/* ProparedStatmentCreator를 사용하는 방식		
- 		this.jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection con)
-					throws SQLException {
-				return con.prepareStatement("DELETE FROM users");
-			}
-		});*/
-		
 		this.jdbcTemplate.update("DELETE FROM users");
 	}
 
