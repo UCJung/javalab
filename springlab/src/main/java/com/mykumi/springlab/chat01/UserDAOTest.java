@@ -23,9 +23,14 @@ public class UserDAOTest {
 	public void getAllTest() {
 		userDao.deleteAll();
 		
+		// 데이타가 없을때에 대한 테스트 케이스 작성
+		List<User> users = userDao.getAll();
+		users = userDao.getAll();
+		assertThat(users.size(), is(0));
+		
 		User user1 = new User("u1", "user01", "111111");
 		userDao.add(user1);
-		List<User> users = userDao.getAll();
+		users = userDao.getAll();
 		assertThat(users.size(), is(1));
 		this.checkSameUser(user1, users.get(0));
 

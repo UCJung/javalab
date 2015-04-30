@@ -8,6 +8,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 public class UserDAO {
+	private class UserRowMapper implements RowMapper<User> {
+		public User mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+			return new User(
+					rs.getString("id"), 
+					rs.getString("name"),
+					rs.getString("password"));
+		}
+	}
+
 	private JdbcTemplate jdbcTemplate;
 	
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -53,14 +63,6 @@ public class UserDAO {
 
 	public List<User> getAll() {
 		return this.jdbcTemplate.query("SELECT * FROM users order by id",
-				new RowMapper<User>() {
-					public User mapRow(ResultSet rs, int rowNum)
-							throws SQLException {
-						return new User(
-								rs.getString("id"), 
-								rs.getString("name"),
-								rs.getString("password"));
-					}
-				});
+				new UserRowMapper());
 	}
 }
