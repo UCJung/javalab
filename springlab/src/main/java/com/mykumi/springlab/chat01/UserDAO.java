@@ -1,5 +1,7 @@
 package com.mykumi.springlab.chat01;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -20,8 +22,8 @@ public class UserDAO {
 		this.jdbcContext = jdbcContext;
 	}
 	
-	public void add(final User user) throws SQLException {
-		this.jdbcContext.excuteUpdateSql("INSERT INTO users(id, name, password) VALUES(?,?,?)",
+	public void add(final User user) {
+		this.jdbcTemplate.update("INSERT INTO users(id, name, password) VALUES(?,?,?)", 
 				user.getId(),
 				user.getName(),
 				user.getPassword());
@@ -46,8 +48,16 @@ public class UserDAO {
 		}, id);		
 	}
 	
-	public void deleteAll() throws SQLException {
-		this.jdbcContext.excuteUpdateSql("DELETE FROM users");
+	public void deleteAll() {
+		/* ProparedStatmentCreator를 사용하는 방식		
+ 		this.jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				return con.prepareStatement("DELETE FROM users");
+			}
+		});*/
+		
+		this.jdbcTemplate.update("DELETE FROM users");
 	}
 
 	public int getCount() throws SQLException {
