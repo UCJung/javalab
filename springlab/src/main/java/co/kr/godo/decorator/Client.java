@@ -4,16 +4,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 public class Client {
-	private static IComponent iComponent;
+	private static IComponent target;
 	
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new GenericXmlApplicationContext(
 				"/co/kr/godo/decorator/applicationContext.xml");
-		iComponent = context.getBean("iComponent", IComponent.class);
+		target = context.getBean("wrapperClass2Decorator", IComponent.class);
 		
-		iComponent.setFirstName("Jung");
-		iComponent.setLastName("Woochul");
-		System.out.println(iComponent.getWelcomeMessage());
+		target.setFirstName("Jung");
+		target.setLastName("Woochul");
+		System.out.println(target.getWelcomeMessage());
 	}
 }
