@@ -24,7 +24,7 @@ public class UserDAOConfigForTest {
 		userDao.deleteAll();
 		assertThat(userDao.getCount(), is(0));
 		
-		User user = new User("mykumi", "UC JUNG", "111111");
+		User user = new User("u1", "user01", "111111", Level.BASIC,1,0);
 
 		userDao.add(user);
 		assertThat(userDao.getCount(), is(1));
@@ -40,13 +40,13 @@ public class UserDAOConfigForTest {
 		userDao.deleteAll();
 		assertThat(userDao.getCount(), is(0));
 		
-		userDao.add(new User("u1", "user01", "111111"));
+		userDao.add(new User("u1", "user01", "111111", Level.BASIC,1,0));
 		assertThat(userDao.getCount(), is(1));
 		
-		userDao.add(new User("u2", "user02", "222222"));
+		userDao.add(new User("u2", "user01", "111111", Level.BASIC,1,0));
 		assertThat(userDao.getCount(), is(2));
 		
-		userDao.add(new User("u3", "user03", "333333"));
+		userDao.add(new User("u3", "user01", "111111", Level.BASIC,1,0));
 		assertThat(userDao.getCount(), is(3));
 	}
 	

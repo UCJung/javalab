@@ -15,7 +15,10 @@ public class UserDAOJdbc implements UserDAO {
 			return new User(
 					rs.getString("id"), 
 					rs.getString("name"),
-					rs.getString("password"));
+					rs.getString("password"),
+					Level.valueOf(rs.getInt("level")),
+					rs.getInt("login"),
+					rs.getInt("recommend"));
 		}
 	}
 
@@ -28,10 +31,13 @@ public class UserDAOJdbc implements UserDAO {
 	@Override
 	public void add(final User user) throws DuplicateKeyException {
 		try {
-			this.jdbcTemplate.update("INSERT INTO users(id, name, password) VALUES(?,?,?)", 
+			this.jdbcTemplate.update("INSERT INTO users(id, name, password, level, login, recommend) VALUES(?,?,?,?,?,?)", 
 					user.getId(),
 					user.getName(),
-					user.getPassword());			
+					user.getPassword(),
+					user.getLevel().intValue(),
+					user.getLogin(),
+					user.getRecommend());			
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateUserIdException(e);
 		}
@@ -39,7 +45,7 @@ public class UserDAOJdbc implements UserDAO {
 
 	@Override
 	public User get(String id) {
-		return this.jdbcTemplate.queryForObject("SELECT id, name, password FROM users WHERE id = ?", 
+		return this.jdbcTemplate.queryForObject("SELECT id, name, password, level, login, recommend  FROM users WHERE id = ?", 
 				new Object[] {id},
 				new UserRowMapper());
 	}
@@ -56,7 +62,7 @@ public class UserDAOJdbc implements UserDAO {
 
 	@Override
 	public List<User> getAll() {
-		return this.jdbcTemplate.query("SELECT * FROM users order by id",
+		return this.jdbcTemplate.query("SELECT id, name, password, level, login, recommend FROM users order by id",
 				new UserRowMapper());
 	}
 }
