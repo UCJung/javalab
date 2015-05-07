@@ -17,7 +17,7 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 		
-	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAO">
+	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDAOJdbc">
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 </beans>

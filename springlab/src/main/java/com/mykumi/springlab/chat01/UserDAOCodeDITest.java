@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/applicationContext.xml")
 public class UserDAOCodeDITest {
 	@Autowired
-	private UserDAO userDao;
+	private UserDAOJdbc userDao;
 	
 	@Autowired
 	private JdbcContext jdbcContext;	
