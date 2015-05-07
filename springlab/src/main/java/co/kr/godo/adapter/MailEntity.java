@@ -1,10 +1,10 @@
 package co.kr.godo.adapter;
 
 public class MailEntity {
-	public String to;
-	public String from;
-	public String subject;
-	public String bodyMessage;
+	private String to;
+	private String from;
+	private String subject;
+	private String bodyMessage;
 
 	public MailEntity(String to, String from, String subject,
 			String bodyMessage) {
@@ -13,4 +13,21 @@ public class MailEntity {
 		this.subject = subject;
 		this.bodyMessage = bodyMessage;
 	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getBodyMessage() {
+		return bodyMessage;
+	}
+
 }

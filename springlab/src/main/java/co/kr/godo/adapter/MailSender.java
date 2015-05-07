@@ -1,21 +1,28 @@
 package co.kr.godo.adapter;
 
+import co.kr.godo.adapter.newmail.NewMailSender;
+
 public class MailSender {
-	private MailEntity parameterObject;
+	private MailEntity mailEntity;
+	private NewMailSender newMailSender = new NewMailSender();
 	
-	public void setMailFrom(MailEntity parameterObject) {
-		this.parameterObject = parameterObject;
+	public void setMailEntity(MailEntity mailEntity) {
+		this.mailEntity = mailEntity;
 	}
 	
 	public void sendMail() {
-		this.send();
+		newMailSender.send(mailEntity.getTo(), 
+				mailEntity.getFrom(), 
+				mailEntity.getSubject(), 
+				mailEntity.getBodyMessage());
 	}
 	
+	@Deprecated
 	private void send() {
-		System.out.println("From " + parameterObject.from);
-		System.out.println("To " + parameterObject.to);
-		System.out.println("Subject " + parameterObject.subject);
-		System.out.println("Body " + parameterObject.bodyMessage);
+		System.out.println("From " + mailEntity.getFrom());
+		System.out.println("To " + mailEntity.getTo());
+		System.out.println("Subject " + mailEntity.getSubject());
+		System.out.println("Body " + mailEntity.getBodyMessage());
 		System.out.println("Sended");
 	}
 }
