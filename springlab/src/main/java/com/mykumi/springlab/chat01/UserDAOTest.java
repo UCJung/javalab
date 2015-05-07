@@ -87,6 +87,18 @@ public class UserDAOTest {
 		userDao.get("unknown_id");
 	}
 	
+	@Test(expected=DuplicateUserIdException.class)
+	public void addDuplicateUser() {
+		userDao.deleteAll();
+		assertThat(userDao.getCount(), is(0));
+		
+		User user = new User("mykumi", "UC JUNG", "111111");
+		userDao.add(user);
+		assertThat(userDao.getCount(), is(1));
+		
+		userDao.add(user);
+	}	
+	
 	private void checkSameUser(User user, User user2) {
 		assertThat(user.getId(), is(user2.getId()));
 		assertThat(user.getName(), is(user2.getName()));

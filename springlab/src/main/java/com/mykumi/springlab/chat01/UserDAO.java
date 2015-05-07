@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -24,11 +25,15 @@ public class UserDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	public void add(final User user) {
-		this.jdbcTemplate.update("INSERT INTO users(id, name, password) VALUES(?,?,?)", 
-				user.getId(),
-				user.getName(),
-				user.getPassword());
+	public void add(final User user) throws DuplicateKeyException {
+		try {
+			this.jdbcTemplate.update("INSERT INTO users(id, name, password) VALUES(?,?,?)", 
+					user.getId(),
+					user.getName(),
+					user.getPassword());			
+		} catch (DuplicateKeyException e) {
+			throw new DuplicateUserIdException(e);
+		}
 	}
 
 	public User get(String id) {
