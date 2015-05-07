@@ -2,9 +2,8 @@ package co.kr.godo.adapter;
 
 import co.kr.godo.adapter.newmail.NewMailSender;
 
-public class MailAdapter implements IMailSend {
+public class MailAdapter extends NewMailSender implements IMailSend {
 	private MailEntity mailEntity;
-	private NewMailSender newMailSender = new NewMailSender();
 	
 	@Override
 	public void setMailEntity(MailEntity mailEntity) {
@@ -13,7 +12,7 @@ public class MailAdapter implements IMailSend {
 	
 	@Override
 	public void sendMail() {
-		newMailSender.send(mailEntity.getTo(), 
+		this.send(mailEntity.getTo(), 
 				mailEntity.getFrom(), 
 				mailEntity.getSubject(), 
 				mailEntity.getBodyMessage());
