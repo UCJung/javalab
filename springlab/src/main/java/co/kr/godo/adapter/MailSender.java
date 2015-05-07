@@ -1,23 +1,20 @@
 package co.kr.godo.adapter;
 
-import co.kr.godo.adapter.newmail.NewMailSender;
+@Deprecated
+public class MailSender implements IMailSend {
 
-public class MailSender {
 	private MailEntity mailEntity;
-	private NewMailSender newMailSender = new NewMailSender();
 	
+	@Override
 	public void setMailEntity(MailEntity mailEntity) {
 		this.mailEntity = mailEntity;
 	}
 	
+	@Override
 	public void sendMail() {
-		newMailSender.send(mailEntity.getTo(), 
-				mailEntity.getFrom(), 
-				mailEntity.getSubject(), 
-				mailEntity.getBodyMessage());
+		this.send();
 	}
 	
-	@Deprecated
 	private void send() {
 		System.out.println("From " + mailEntity.getFrom());
 		System.out.println("To " + mailEntity.getTo());
@@ -25,4 +22,5 @@ public class MailSender {
 		System.out.println("Body " + mailEntity.getBodyMessage());
 		System.out.println("Sended");
 	}
+
 }
