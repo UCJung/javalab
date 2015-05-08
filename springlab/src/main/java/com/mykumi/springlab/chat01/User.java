@@ -12,6 +12,7 @@ public class User {
 		
 	}
 	
+	@Deprecated
 	public User(String id, 
 			String name, 
 			String password,
@@ -24,6 +25,15 @@ public class User {
 		this.level = level;
 		this.login = login;
 		this.recommend = recommend;
+	}
+	
+	public User(UserBuilder builder) {
+		this.id = builder.id;
+		this.name = builder.name;
+		this.password = builder.password;
+		this.level = builder.level;
+		this.login = builder.login;
+		this.recommend = builder.recommend;
 	}
 
 	public String getId() {
@@ -72,5 +82,47 @@ public class User {
 
 	public void setRecommend(int recommend) {
 		this.recommend = recommend;
+	}
+	
+	public static class UserBuilder {
+		private final String id;
+		private String name;
+		private String password;
+		private Level level;
+		private int login;
+		private int recommend;
+		
+		public UserBuilder(String id) {
+			this.id = id;
+		}
+
+		public UserBuilder name(String name) {
+			this.name = name;
+			return this;
+		}
+		
+		public UserBuilder password(String password) {
+			this.password = password;
+			return this;
+		}
+		
+		public UserBuilder level(Level level) {
+			this.level = level;
+			return this;
+		}
+		
+		public UserBuilder password(int login) {
+			this.login = login;
+			return this;
+		}
+		
+		public UserBuilder recommend(int recommend) {
+			this.recommend = recommend;
+			return this;
+		}	
+		
+		public User build() {
+			return new User(this);
+		}
 	}
 }
