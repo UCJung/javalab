@@ -12,13 +12,12 @@ public class UserDAOJdbc implements UserDAO {
 	private class UserRowMapper implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
-			return new User(
-					rs.getString("id"), 
-					rs.getString("name"),
-					rs.getString("password"),
-					Level.valueOf(rs.getInt("level")),
-					rs.getInt("login"),
-					rs.getInt("recommend"));
+			return new User.UserBuilder(rs.getString("id")).name(rs.getString("name"))
+					.password(rs.getString("password"))
+					.level(Level.valueOf(rs.getInt("level")))
+					.login(rs.getInt("login"))
+					.recommend(rs.getInt("recommend"))
+					.build();
 		}
 	}
 

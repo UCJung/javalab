@@ -111,7 +111,7 @@ public class User {
 			return this;
 		}
 		
-		public UserBuilder password(int login) {
+		public UserBuilder login(int login) {
 			this.login = login;
 			return this;
 		}
