@@ -26,19 +26,19 @@ public class UserDAOTest {
 	
 	@Before
 	public void setup() {
-		this.user1 = new User.UserBuilder("u1").name("user01")
+		this.user1 = new UserBuilder("u1").name("user01")
 				.password("111111")
 				.level(Level.BASIC)
 				.login(0)
 				.recommend(1)
 				.build();
-		this.user2 = new User.UserBuilder("u2").name("user02")
+		this.user2 = new UserBuilder("u2").name("user02")
 				.password("222222")
 				.level(Level.SILVER)
 				.login(55)				
 				.recommend(10)
 				.build();
-		this.user3 = new User.UserBuilder("u3").name("user03")
+		this.user3 = new UserBuilder("u3").name("user03")
 				.password("33333")
 				.level(Level.GOLD)
 				.login(100)
