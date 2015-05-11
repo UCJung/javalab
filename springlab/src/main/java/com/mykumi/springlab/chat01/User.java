@@ -27,13 +27,13 @@ public class User {
 		this.recommend = recommend;
 	}
 	
-	public User(UserBuilder builder) {
-		this.id = builder.id;
-		this.name = builder.name;
-		this.password = builder.password;
-		this.level = builder.level;
-		this.login = builder.login;
-		this.recommend = builder.recommend;
+	public User(UserBuilder userBuilder) {
+		this.id = userBuilder.id;
+		this.name = userBuilder.name;
+		this.password = userBuilder.password;
+		this.level = userBuilder.level;
+		this.login = userBuilder.login;
+		this.recommend = userBuilder.recommend;
 	}
 
 	public String getId() {
