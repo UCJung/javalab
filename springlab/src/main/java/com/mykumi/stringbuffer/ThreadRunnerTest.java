@@ -21,7 +21,7 @@ public class ThreadRunnerTest {
 		activatedRunners();
 		isAliveRunners();
 
-		assertEquals(160000, sb.toString().length());
+		assertNotSame(160000, sb.toString().length());
 	}
 	
 	@Test
