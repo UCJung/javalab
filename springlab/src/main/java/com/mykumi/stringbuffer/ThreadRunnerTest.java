@@ -4,37 +4,34 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ThreadRunnerTest {
 
-	private static ArrayList<ThreadRunner> threadRunners;
-	private static StringBuilder sb;
-	private static StringBuffer sbf;	
-	
-	@Test
-	public final void testStringBuilder() throws InterruptedException {
+	private ArrayList<ThreadRunner> threadRunners;
+	private StringBuilder sb;
+	private StringBuffer sbf;	
+
+	@Before
+	public void setup() {
 		sb = new StringBuilder();
-		sbf = new StringBuffer();	
-		
+		sbf = new StringBuffer();
 		createRunners();
 		activatedRunners();
-		isAliveRunners();
-
-		assertNotSame(160000, sb.toString().length());
 	}
 	
 	@Test
-	public final void testStringBuffer() throws InterruptedException {
-		sb = new StringBuilder();
-		sbf = new StringBuffer();	
-		
-		createRunners();
-		activatedRunners();
+	public void testStringBuffer() throws InterruptedException {
 		isAliveRunners();
-
 		assertEquals(160000, sbf.toString().length());
-	}	
+	}		
+	
+	@Test
+	public void testStringBuilder() throws InterruptedException {
+		isAliveRunners();
+		assertNotSame(160000, sb.toString().length());
+	}
 	
 	private void activatedRunners() {
 		for (ThreadRunner tr : threadRunners) {

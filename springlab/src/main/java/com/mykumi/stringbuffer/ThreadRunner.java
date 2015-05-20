@@ -19,7 +19,9 @@ public class ThreadRunner implements Runnable {
 		System.out.println("Running : " + threadName);
 		for (int i = 4; i > 0 ; i--) {
 			for (int j = 0 ; j < 10000 ; j ++ ) {
-				sb.append("a");
+				synchronized (sb) {
+					sb.append("a");
+				}
 				sbf.append("a");
 			}
 			try {
@@ -29,8 +31,6 @@ public class ThreadRunner implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
-
 		System.out.println("Exited " +  threadName);
 	}
 	
