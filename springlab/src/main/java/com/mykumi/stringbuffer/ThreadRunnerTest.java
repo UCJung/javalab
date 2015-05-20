@@ -1,6 +1,7 @@
 package com.mykumi.stringbuffer;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import java.util.ArrayList;
 
@@ -18,19 +19,19 @@ public class ThreadRunnerTest {
 		sb = new StringBuilder();
 		sbf = new StringBuffer();
 		createRunners();
-		activatedRunners();
+		activatedRunners();		
 	}
 	
 	@Test
 	public void testStringBuffer() throws InterruptedException {
 		isAliveRunners();
-		assertEquals(160000, sbf.toString().length());
+		assertThat(160000, is(sbf.toString().length()));
 	}		
 	
 	@Test
 	public void testStringBuilder() throws InterruptedException {
 		isAliveRunners();
-		assertNotSame(160000, sb.toString().length());
+		assertThat(160000, not(sb.toString().length()));
 	}
 	
 	private void activatedRunners() {
