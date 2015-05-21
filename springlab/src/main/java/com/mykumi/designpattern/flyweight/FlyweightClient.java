@@ -3,6 +3,8 @@ package com.mykumi.designpattern.flyweight;
 import java.util.Scanner;
 
 public class FlyweightClient {
+	private static FlyweightNotifyMessageFactory nmFactory = new FlyweightNotifyMessageFactory();  
+	
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
@@ -20,8 +22,8 @@ public class FlyweightClient {
 	}
 
 	private static void displayWelcomeMessage(String messageBody) {
-		NotifyMessage formated = new FormatedNotifyMessage("welcome");
-		formated.setMessage(messageBody);
-		formated.displayMessage();
+		NotifyMessage welcomNotifyMessage = nmFactory.getFormatedNotifyMessage("welcome");
+		welcomNotifyMessage.setMessage(messageBody);
+		welcomNotifyMessage.displayMessage();
 	}
 }
