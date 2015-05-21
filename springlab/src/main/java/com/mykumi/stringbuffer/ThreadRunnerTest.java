@@ -25,12 +25,14 @@ public class ThreadRunnerTest {
 	@Test
 	public void testStringBuffer() throws InterruptedException {
 		isAliveRunners();
+		// StringBuffer의 경우 항상 160000이 나오는 것을 보장한다.
 		assertThat(160000, is(sbf.toString().length()));
 	}		
 	
 	@Test
 	public void testStringBuilder() throws InterruptedException {
 		isAliveRunners();
+		// StringBuilder의 경우 항상 160000이 나오는 것을 보장하지 못한다.
 		assertThat(160000, not(sb.toString().length()));
 	}
 	
