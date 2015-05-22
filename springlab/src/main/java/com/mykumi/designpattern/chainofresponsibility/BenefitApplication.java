@@ -1,25 +1,30 @@
 package com.mykumi.designpattern.chainofresponsibility;
 
+import java.util.ArrayList;
+
 public abstract class BenefitApplication {
 	protected BenefitApplication nextApplicator;
-	protected Benefit sourceBenefit;
 	
 	public BenefitApplication setNextApplicator(BenefitApplication nextApplicator) {
 		this.nextApplicator = nextApplicator;
 		return this.nextApplicator;
 	}
 	
-	public void setBenefit(Benefit benefit) {
-		this.sourceBenefit = benefit;
-	}
+	public abstract void applyBenefit(Benefit benefit);
 	
-	public abstract void applyBenefit();
-	
-	public void excute() {
-		this.applyBenefit();
+	public void excute(Benefit benefit) {
+		this.applyBenefit(benefit);
 		if (nextApplicator != null) {
-			nextApplicator.setBenefit(sourceBenefit);
-			nextApplicator.excute();
+			nextApplicator.excute(benefit);
 		}
 	}
+	
+	public void excute(ArrayList<Benefit> benefits) {
+		for (Benefit benefit : benefits) {
+			this.applyBenefit(benefit);
+		}
+		if (nextApplicator != null) {
+			nextApplicator.excute(benefits);
+		}
+	}	
 }

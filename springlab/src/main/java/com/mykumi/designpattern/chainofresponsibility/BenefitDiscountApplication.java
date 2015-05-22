@@ -3,9 +3,9 @@ package com.mykumi.designpattern.chainofresponsibility;
 public class BenefitDiscountApplication extends BenefitApplication {
 
 	@Override
-	public void applyBenefit() {
-		if (sourceBenefit.getBenefitType() == BenefitType.Discount)
-			System.out.println(sourceBenefit.getBenefitName() + ": Discount 적용");
+	public void applyBenefit(Benefit benefit) {
+		if (benefit.getBenefitType() == BenefitType.Discount)
+			System.out.println(benefit.getBenefitName() + ": Discount 적용");
 	}
 
 }
