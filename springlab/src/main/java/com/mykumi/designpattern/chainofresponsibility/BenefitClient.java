@@ -3,24 +3,24 @@ package com.mykumi.designpattern.chainofresponsibility;
 import java.util.ArrayList;
 
 public class BenefitClient {
+	private static BenefitApplication baChain = BenefitApplicationFactory.getBenefitApplicationResponsbleChain();;
+	private static ArrayList<Benefit> benefits = new ArrayList<Benefit>();
+	
 	public static void main(String[] args) {
-		ArrayList<Benefit> benefits = new ArrayList<Benefit>();
+		createBenefits();
+		applyBenefit();
+	}
 
+	private static void createBenefits() {
 		benefits.add(new Benefit(BenefitType.Coupon, "A Coupon"));
 		benefits.add(new Benefit(BenefitType.Point, "A Point"));
 		benefits.add(new Benefit(BenefitType.Discount, "A Discont"));
-		
-		applyBenefit(benefits);
 	}
 
-	private static void applyBenefit(ArrayList<Benefit> benefits) {
-		BenefitApplication ba;
-		
+	private static void applyBenefit() {
 		for (Benefit benefit : benefits) {
-			ba = BenefitApplicationFactory.getBenefitApplication(benefit.getBenefitType());
-			ba.setBenefit(benefit);
-			ba.applyBenefit();			
+			baChain.setBenefit(benefit);
+			baChain.excute();			
 		}
-		
 	}
 }

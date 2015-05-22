@@ -20,4 +20,11 @@ public class BenefitApplicationFactory {
 		
 		return ba;
 	}
+	
+	public static BenefitApplication getBenefitApplicationResponsbleChain() {
+		BenefitApplication baChain = new BenefitPointApplication();
+		baChain.setNextApplicator(new BenefitDiscountApplication())
+		.setNextApplicator(new BenefitCouponApplication());
+		return baChain;
+	}	
 }

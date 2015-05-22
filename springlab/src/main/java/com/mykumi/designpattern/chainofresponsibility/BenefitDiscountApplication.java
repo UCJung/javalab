@@ -4,7 +4,8 @@ public class BenefitDiscountApplication extends BenefitApplication {
 
 	@Override
 	public void applyBenefit() {
-		System.out.println("Discount 적용");
+		if (sourceBenefit.getBenefitType() == BenefitType.Discount)
+			System.out.println(sourceBenefit.getBenefitName() + ": Discount 적용");
 	}
 
 }
