@@ -14,11 +14,13 @@ public class BenefitClient {
 	}
 
 	private static void applyBenefit(ArrayList<Benefit> benefits) {
-		BenefitApplication ba = new BenefitApplication();
+		BenefitApplication ba;
 		
 		for (Benefit benefit : benefits) {
+			ba = BenefitApplicationFactory.getBenefitApplication(benefit.getBenefitType());
 			ba.setBenefit(benefit);
 			ba.applyBenefit();			
 		}
+		
 	}
 }
