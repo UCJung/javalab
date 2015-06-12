@@ -9,7 +9,7 @@ public class Client {
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new GenericXmlApplicationContext(
-				"/co/kr/godo/decorator/applicationContext.xml");
+				"/com/mykumi/designpattern/decorator/applicationContext.xml");
 		target = context.getBean("wrapperClass2Decorator", IComponent.class);
 		
 		target.setFirstName("Jung");
