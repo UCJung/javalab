@@ -1,4 +1,4 @@
-package co.kr.godo.decorator;
+package com.mykumi.designpattern.decorator;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;

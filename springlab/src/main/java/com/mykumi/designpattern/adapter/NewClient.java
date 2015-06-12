@@ -1,9 +1,9 @@
-package co.kr.godo.adapter;
+package com.mykumi.designpattern.adapter;
 
-public class Client {
+public class NewClient {
 
 	public static void main(String[] args) {
-		MailSender mailSender = new MailSender();
+		IMailSend mailSender = new MailAdapter();
 		mailSender.setMailEntity(new MailEntity("Jung", "Kim", "Hi Kim", "See you again"));
 		mailSender.sendMail();
 	}

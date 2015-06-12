@@ -1,4 +1,4 @@
-package co.kr.godo.decorator;
+package com.mykumi.designpattern.decorator;
 
 public abstract class Decorator implements IComponent {
 

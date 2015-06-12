@@ -1,6 +1,6 @@
-package co.kr.godo.adapter;
+package com.mykumi.designpattern.adapter;
 
-import co.kr.godo.adapter.newmail.NewMailSender;
+import com.mykumi.designpattern.adapter.newmail.NewMailSender;
 
 public class MailAdapter extends NewMailSender implements IMailSend {
 	private MailEntity mailEntity;
