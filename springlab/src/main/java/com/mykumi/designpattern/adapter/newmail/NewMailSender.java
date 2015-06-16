@@ -1,4 +1,4 @@
-package co.kr.godo.adapter.newmail;
+package com.mykumi.designpattern.adapter.newmail;
 
 public class NewMailSender {
 	public void send(String to, String from, String subject,

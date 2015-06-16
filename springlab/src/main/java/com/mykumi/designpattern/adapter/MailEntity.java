@@ -1,4 +1,4 @@
-package co.kr.godo.adapter;
+package com.mykumi.designpattern.adapter;
 
 public class MailEntity {
 	private String to;

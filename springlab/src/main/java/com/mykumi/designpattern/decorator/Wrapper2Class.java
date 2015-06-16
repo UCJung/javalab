@@ -1,4 +1,4 @@
-package co.kr.godo.decorator;
+package com.mykumi.designpattern.decorator;
 
 public class Wrapper2Class extends Decorator {
 

@@ -3,13 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
-	<bean id="target" class="co.kr.godo.decorator.OrignalClass"></bean>
+	<bean id="target" class="com.mykumi.designpattern.decorator.OrignalClass"></bean>
 
-	<bean id="wrapperClassDecorator" class="co.kr.godo.decorator.WrapperClass">
+	<bean id="wrapperClassDecorator" class="com.mykumi.designpattern.decorator.WrapperClass">
 		<property name="iComponent" ref="target"></property>
 	</bean>
 	
-	<bean id="wrapperClass2Decorator" class="co.kr.godo.decorator.Wrapper2Class">
+	<bean id="wrapperClass2Decorator" class="com.mykumi.designpattern.decorator.Wrapper2Class">
 		<property name="iComponent" ref="wrapperClassDecorator"></property>
 	</bean>	
 
