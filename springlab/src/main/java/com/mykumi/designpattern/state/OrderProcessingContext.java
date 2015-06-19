@@ -10,19 +10,19 @@ public class OrderProcessingContext {
 	public void changeState(int state) {
 		switch (state) {
 		case 0 :
-			System.out.println(state + " 상태로 변경 ");
+			System.out.println(state + " change state");
 			break;
 
 		case 1 :
-			System.out.println(state + " 상태로 변경 ");
+			System.out.println(state + " change state");
 			break;
 
 		case 2 :
-			System.out.println(state + " 상태로 변경 ");
+			System.out.println(state + " change state");
 			break;
 			
 		default:
-			System.out.println(state + " 상태는 지원하지 않음");
+			System.out.println(state + " is not allowed");
 			break;
 		}
 		
@@ -33,19 +33,19 @@ public class OrderProcessingContext {
 		int currentState = this.order.getState(); 
 		switch (currentState) {
 		case 0 :
-			System.out.println(currentState + " 상태에서 취소 ");
+			System.out.println(currentState + " canceled ");
 			break;
 
 		case 1 :
-			System.out.println(currentState + " 상태에서 취소 ");
+			System.out.println(currentState + " canceled");
 			break;
 
 		case 2 :
-			System.out.println(currentState + " 상태에서 취소 ");
+			System.out.println(currentState + " canceled");
 			break;
 			
 		default:
-			System.out.println(currentState + " 상태는 지원하지 않음 ");
+			System.out.println(currentState + " is not allowed");
 			break;
 		}
 		

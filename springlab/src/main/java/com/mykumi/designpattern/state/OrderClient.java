@@ -4,7 +4,7 @@ public class OrderClient {
 
 	public static void main(String[] args) {
 		OrderModel order = new OrderModel();
-		order.setProductName("AªÛ«∞");
+		order.setProductName("A Product");
 		order.setTotalAmount(12000);
 		
 		OrderProcessingContext orderProcessingContext = new OrderProcessingContext(order);
