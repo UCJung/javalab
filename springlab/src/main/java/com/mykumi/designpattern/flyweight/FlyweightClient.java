@@ -18,6 +18,8 @@ public class FlyweightClient {
 			}
 			displayWelcomeMessage(name);
 		}
+		
+		sc.close();
 	}
 
 	private static void displayWelcomeMessage(String messageBody) {
