@@ -9,9 +9,9 @@ public class TestUserService extends UserService {
 		this.id = id;
 	}
 	
-	protected void upgradeLevel(User user) {
+	protected void upgradeLevel(User user) throws TestUserServiceException {
 		if (user.getId().equals(this.id)) throw new TestUserServiceException();
-		super.upgradeLevels();
+		super.upgradeLevel(user);
 		
 	}
 	

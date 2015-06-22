@@ -8,6 +8,8 @@ import static org.hamcrest.CoreMatchers.*;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +29,9 @@ import com.mykumi.springlab.chat01.user.service.TestUserService.TestUserServiceE
 public class UserServiceTest {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DataSource dataSource;
 	
 	@Autowired
 	UserDao userDao;
@@ -51,7 +56,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void ugradeLevels() {
+	public void ugradeLevels() throws Exception {
 		userDao.deleteAll();
 		
 		for (User user : users) {
@@ -86,16 +91,17 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void upgradeAllOrNothing() {
+	public void upgradeAllOrNothing() throws Exception {
 		UserService testUserService = new TestUserService(users.get(3).getId());
 		testUserService.setUserDao(this.userDao);
+		testUserService.setDataSource(this.dataSource);
 		userDao.deleteAll();
 		
 		for (User user : users) userDao.add(user);
 		
 		try {
 			testUserService.upgradeLevels();
-			//fail("TestUserServiceException expected");
+			fail("TestUserServiceException expected");
 		} catch (TestUserServiceException e) {
 		}
 		checkLevel(users.get(1), false); // 오류 이전에 Update 한 사용자의 Level이 바뀌었나 확인
