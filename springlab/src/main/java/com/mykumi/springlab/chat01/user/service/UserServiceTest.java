@@ -1,5 +1,8 @@
 package com.mykumi.springlab.chat01.user.service;
 
+import static com.mykumi.springlab.chat01.user.service.UserService.MIN_LOGINCOUNT_FOR_SILVER;
+import static com.mykumi.springlab.chat01.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -34,11 +37,11 @@ public class UserServiceTest {
 	public void setUp() {
 		UserBuilder userBuilder = new UserBuilderTypeA();
 		users = Arrays.asList(
-				userBuilder.id("user1").name("name1").password("u1").level(Level.BASIC).login(49).recommend(0).build(),
-				userBuilder.id("user2").name("name2").password("u2").level(Level.BASIC).login(50).recommend(0).build(),
-				userBuilder.id("user3").name("name3").password("u3").level(Level.SILVER).login(60).recommend(29).build(),
-				userBuilder.id("user4").name("name4").password("u4").level(Level.SILVER).login(60).recommend(30).build(),
-				userBuilder.id("user5").name("name5").password("u5").level(Level.GOLD).login(100).recommend(100).build()
+				userBuilder.id("user1").name("name1").password("u1").level(Level.BASIC).login(MIN_LOGINCOUNT_FOR_SILVER - 1).recommend(0).build(),
+				userBuilder.id("user2").name("name2").password("u2").level(Level.BASIC).login(MIN_LOGINCOUNT_FOR_SILVER).recommend(0).build(),
+				userBuilder.id("user3").name("name3").password("u3").level(Level.SILVER).login(60).recommend(MIN_RECOMMEND_FOR_GOLD-1).build(),
+				userBuilder.id("user4").name("name4").password("u4").level(Level.SILVER).login(60).recommend(MIN_RECOMMEND_FOR_GOLD).build(),
+				userBuilder.id("user5").name("name5").password("u5").level(Level.GOLD).login(100).recommend(Integer.MAX_VALUE).build()
 				);
 	}
 	
@@ -57,11 +60,11 @@ public class UserServiceTest {
 		
 		userService.upgradeLevels();
 		
-		checkLevel(users.get(0), Level.BASIC);
-		checkLevel(users.get(1), Level.SILVER);
-		checkLevel(users.get(2), Level.SILVER);
-		checkLevel(users.get(3), Level.GOLD);
-		checkLevel(users.get(4), Level.GOLD);
+		checkLevel(users.get(0), false);
+		checkLevel(users.get(1), true);
+		checkLevel(users.get(2), false);
+		checkLevel(users.get(3), true);
+		checkLevel(users.get(4), false);
 	}
 	
 	@Test
@@ -82,8 +85,12 @@ public class UserServiceTest {
 		assertThat(userWithoutLevelRead.getLevel(), is(Level.BASIC));
 	}
 	
-	private void checkLevel(User user, Level expectedLevel) {
+	private void checkLevel(User user, boolean upgraded) {
 		User userUpdate = userDao.get(user.getId());
-		assertThat(userUpdate.getLevel(), is(expectedLevel));
+		if (upgraded) {
+			assertThat(userUpdate.getLevel(), is(user.getLevel().nextLevel()));
+		} else {
+			assertThat(userUpdate.getLevel(), is(user.getLevel()));
+		}
 	}
 }
