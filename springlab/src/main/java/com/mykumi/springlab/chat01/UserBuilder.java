@@ -8,6 +8,7 @@ public abstract class UserBuilder {
 	protected Level level;
 	protected int login;
 	protected int recommend;
+	protected String email;
 
 	public UserBuilder id(String id) {
 		this.id = id;
@@ -21,6 +22,11 @@ public abstract class UserBuilder {
 
 	public UserBuilder password(String password) {
 		this.password = password;
+		return this;
+	}
+	
+	public UserBuilder email(String email) {
+		this.email = email;
 		return this;
 	}
 

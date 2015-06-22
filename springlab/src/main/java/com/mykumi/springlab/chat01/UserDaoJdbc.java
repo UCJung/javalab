@@ -19,6 +19,7 @@ public class UserDaoJdbc implements UserDao {
 					.level(Level.valueOf(rs.getInt("level")))
 					.login(rs.getInt("login"))
 					.recommend(rs.getInt("recommend"))
+					.email(rs.getString("email"))
 					.build();
 		}
 	}
@@ -32,13 +33,14 @@ public class UserDaoJdbc implements UserDao {
 	@Override
 	public void add(final User user) throws DuplicateKeyException {
 		try {
-			this.jdbcTemplate.update("INSERT INTO users(id, name, password, level, login, recommend) VALUES(?,?,?,?,?,?)", 
+			this.jdbcTemplate.update("INSERT INTO users(id, name, password, level, login, recommend, email) VALUES(?,?,?,?,?,?,?)", 
 					user.getId(),
 					user.getName(),
 					user.getPassword(),
 					user.getLevel().intValue(),
 					user.getLogin(),
-					user.getRecommend());			
+					user.getRecommend(),
+					user.getEmail());			
 		} catch (DuplicateKeyException e) {
 			throw new DuplicateUserIdException(e);
 		}
@@ -46,7 +48,7 @@ public class UserDaoJdbc implements UserDao {
 
 	@Override
 	public User get(String id) {
-		return this.jdbcTemplate.queryForObject("SELECT id, name, password, level, login, recommend  FROM users WHERE id = ?", 
+		return this.jdbcTemplate.queryForObject("SELECT id, name, password, level, login, recommend, email  FROM users WHERE id = ?", 
 				new Object[] {id},
 				new UserRowMapper());
 	}
@@ -63,18 +65,19 @@ public class UserDaoJdbc implements UserDao {
 
 	@Override
 	public List<User> getAll() {
-		return this.jdbcTemplate.query("SELECT id, name, password, level, login, recommend FROM users order by id",
+		return this.jdbcTemplate.query("SELECT id, name, password, level, login, recommend, email FROM users order by id",
 				new UserRowMapper());
 	}
 
 	@Override
 	public void update(User user) {
-		this.jdbcTemplate.update("UPDATE users SET name = ?, password = ?, level = ?, login = ?, recommend = ? WHERE id = ?", 
+		this.jdbcTemplate.update("UPDATE users SET name = ?, password = ?, level = ?, login = ?, recommend = ?, email = ? WHERE id = ?", 
 				user.getName(),
 				user.getPassword(),
 				user.getLevel().intValue(),
 				user.getLogin(),
 				user.getRecommend(),
+				user.getEmail(),
 				user.getId());
 	}
 }

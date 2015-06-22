@@ -45,20 +45,31 @@ public class UserServiceTest {
 		users = Arrays.asList(
 				userBuilder.id("user1").name("name1").password("u1")
 						.level(Level.BASIC)
-						.login(MIN_LOGINCOUNT_FOR_SILVER - 1).recommend(0)
+						.login(MIN_LOGINCOUNT_FOR_SILVER - 1)
+						.recommend(0)
+						.email("mykumi1@gmail.com")
 						.build(),
 				userBuilder.id("user2").name("name2").password("u2")
-						.level(Level.BASIC).login(MIN_LOGINCOUNT_FOR_SILVER)
-						.recommend(0).build(),
+						.level(Level.BASIC)
+						.login(MIN_LOGINCOUNT_FOR_SILVER)
+						.recommend(0)
+						.email("mykumi2@gmail.com")
+						.build(),
 				userBuilder.id("user3").name("name3").password("u3")
-						.level(Level.SILVER).login(60)
+						.level(Level.SILVER)
+						.login(60)
+						.email("mykumi3@gmail.com")
 						.recommend(MIN_RECOMMEND_FOR_GOLD - 1).build(),
 				userBuilder.id("user4").name("name4").password("u4")
 						.level(Level.SILVER).login(60)
-						.recommend(MIN_RECOMMEND_FOR_GOLD).build(),
+						.recommend(MIN_RECOMMEND_FOR_GOLD)
+						.email("mykumi4@gmail.com")
+						.build(),
 				userBuilder.id("user5").name("name5").password("u5")
 						.level(Level.GOLD).login(100)
-						.recommend(Integer.MAX_VALUE).build());
+						.recommend(Integer.MAX_VALUE)
+						.email("mykumi5@gmail.com")
+						.build());
 	}
 
 	@Test

@@ -8,6 +8,7 @@ public class User {
 	private Level level;
 	private int login;
 	private int recommend;
+	private String email;
 	
 	public User() {
 		
@@ -35,6 +36,7 @@ public class User {
 		this.level = userBuilder.level;
 		this.login = userBuilder.login;
 		this.recommend = userBuilder.recommend;
+		this.email = userBuilder.email;
 	}
 
 	public String getId() {
@@ -93,5 +95,13 @@ public class User {
 		else {
 			this.level = nextLevel;
 		}
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

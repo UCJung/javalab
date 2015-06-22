@@ -35,6 +35,7 @@ public class UserDaoTest {
 				.level(Level.BASIC)
 				.login(0)
 				.recommend(1)
+				.email("mykumi1@gmail.com")
 				.build();
 		this.user2 = builder2.id("u2")
 				.name("user02")
@@ -42,6 +43,7 @@ public class UserDaoTest {
 				.level(Level.SILVER)
 				.login(55)				
 				.recommend(10)
+				.email("mykumi2@gmail.com")
 				.build();
 		this.user3 = builder1.id("u3")
 				.name("user03")
@@ -49,6 +51,7 @@ public class UserDaoTest {
 				.level(Level.GOLD)
 				.login(100)
 				.recommend(40)
+				.email("mykumi3@gmail.com")
 				.build();		
 	}
 
@@ -155,5 +158,6 @@ public class UserDaoTest {
 		assertThat(user.getLevel(), is(user2.getLevel()));
 		assertThat(user.getLogin(), is(user2.getLogin()));
 		assertThat(user.getRecommend(), is(user2.getRecommend()));
+		assertThat(user.getEmail(), is(user2.getEmail()));
 	}
 }
