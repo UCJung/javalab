@@ -1,12 +1,10 @@
 package com.mykumi.springlab.chat01.user.service;
 
-import java.sql.Connection;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.mykumi.springlab.chat01.Level;
 import com.mykumi.springlab.chat01.User;
@@ -16,21 +14,20 @@ public class UserService {
 	public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 	public static final int MIN_LOGINCOUNT_FOR_SILVER = 50;
 	private UserDao userDao;
-	protected DataSource dataSource;
+	private PlatformTransactionManager transactionManager;
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
 	}
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+	public void setTransactionManager(
+			PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
 	}
 
 	public void upgradeLevels() throws Exception {
-		TransactionSynchronizationManager.initSynchronization();
-		Connection c = DataSourceUtils.getConnection(dataSource);
-
-		c.setAutoCommit(false);
+		TransactionStatus status = this.transactionManager
+				.getTransaction(new DefaultTransactionDefinition());
 
 		try {
 			List<User> users = userDao.getAll();
@@ -41,14 +38,10 @@ public class UserService {
 				}
 			}
 
-			c.commit();
+			this.transactionManager.commit(status);
 		} catch (Exception e) {
-			c.rollback();
+			this.transactionManager.rollback(status);
 			throw e;
-		} finally {
-			DataSourceUtils.releaseConnection(c, dataSource);
-			TransactionSynchronizationManager.unbindResource(this.dataSource);
-			TransactionSynchronizationManager.clearSynchronization();
 		}
 	}
 
