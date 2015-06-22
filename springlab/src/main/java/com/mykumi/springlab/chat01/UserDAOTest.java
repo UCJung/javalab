@@ -112,6 +112,7 @@ public class UserDAOTest {
 		userDao.deleteAll();
 		
 		userDao.add(user1);
+		userDao.add(user2);
 		
 		user1.setName("user01_c");
 		user1.setPassword("1c");
@@ -123,6 +124,9 @@ public class UserDAOTest {
 		
 		User user1update = userDao.get(user1.getId());
 		checkSameUser(user1, user1update);
+		
+		User user2same = userDao.get(user2.getId());
+		checkSameUser(user2, user2same);		
 	}
 	
 	@Test(expected=EmptyResultDataAccessException.class)
