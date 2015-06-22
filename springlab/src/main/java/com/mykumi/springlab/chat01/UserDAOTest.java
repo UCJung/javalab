@@ -107,6 +107,24 @@ public class UserDAOTest {
 		assertThat(userDao.getCount(), is(3));
 	}
 	
+	@Test
+	public void updateUser() {
+		userDao.deleteAll();
+		
+		userDao.add(user1);
+		
+		user1.setName("user01_c");
+		user1.setPassword("1c");
+		user1.setLevel(Level.GOLD);
+		user1.setLogin(1000);
+		user1.setRecommend(999);
+		
+		userDao.update(user1);
+		
+		User user1update = userDao.get(user1.getId());
+		checkSameUser(user1, user1update);
+	}
+	
 	@Test(expected=EmptyResultDataAccessException.class)
 	public void getFailure() {
 		userDao.deleteAll();
