@@ -1,5 +1,6 @@
 package com.mykumi.springlab.chat01;
 
+
 public class User {
 	private String id;
 	private String name;
@@ -82,5 +83,15 @@ public class User {
 
 	public void setRecommend(int recommend) {
 		this.recommend = recommend;
+	}
+
+	public void upgradeLevel() {
+		Level nextLevel = this.level.nextLevel();
+		if (nextLevel == null) {
+			throw new IllegalArgumentException("");
+		}
+		else {
+			this.level = nextLevel;
+		}
 	}
 }
