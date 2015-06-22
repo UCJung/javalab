@@ -2,7 +2,6 @@ package com.mykumi.springlab.chat01.user.service;
 
 import static com.mykumi.springlab.chat01.user.service.UserService.MIN_LOGINCOUNT_FOR_SILVER;
 import static com.mykumi.springlab.chat01.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
-
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -21,6 +20,7 @@ import com.mykumi.springlab.chat01.User;
 import com.mykumi.springlab.chat01.UserBuilder;
 import com.mykumi.springlab.chat01.UserBuilderTypeA;
 import com.mykumi.springlab.chat01.UserDao;
+import com.mykumi.springlab.chat01.user.service.TestUserService.TestUserServiceException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/user/service/applicationContext.xml")
@@ -83,6 +83,22 @@ public class UserServiceTest {
 		
 		assertThat(userWithLevelRead.getLevel(), is(userWithLevel.getLevel()));
 		assertThat(userWithoutLevelRead.getLevel(), is(Level.BASIC));
+	}
+	
+	@Test
+	public void upgradeAllOrNothing() {
+		UserService testUserService = new TestUserService(users.get(3).getId());
+		testUserService.setUserDao(this.userDao);
+		userDao.deleteAll();
+		
+		for (User user : users) userDao.add(user);
+		
+		try {
+			testUserService.upgradeLevels();
+			//fail("TestUserServiceException expected");
+		} catch (TestUserServiceException e) {
+		}
+		checkLevel(users.get(1), false); // 오류 이전에 Update 한 사용자의 Level이 바뀌었나 확인
 	}
 	
 	private void checkLevel(User user, boolean upgraded) {

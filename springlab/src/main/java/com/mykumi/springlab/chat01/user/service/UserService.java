@@ -25,7 +25,7 @@ public class UserService {
 		}
 	}
 	
-	private boolean canUpgradeLevel(User user) {
+	protected boolean canUpgradeLevel(User user) {
 		Level currentLevel = user.getLevel();
 		switch (currentLevel) {
 			case BASIC : return (user.getLogin() >= MIN_LOGINCOUNT_FOR_SILVER);
