@@ -16,9 +16,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/applicationContext.xml")
-public class UserDAOTest {
+public class UserDaoTest {
 	@Autowired
-	private UserDAO userDao;
+	private UserDao userDao;
 	
 	private User user1;
 	private User user2;

@@ -15,9 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="/com/mykumi/springlab/chat01/test-applicationContext.xml")
-public class UserDAOConfigForTest {
+public class UserDaoConfigForTest {
 	@Autowired
-	private UserDAO userDao;
+	private UserDao userDao;
 
 	@Test
 	public void addAndGet() throws SQLException {

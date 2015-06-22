@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.dao.DuplicateKeyException;
 
-public interface UserDAO {
+public interface UserDao {
 
 	public void add(User user) throws DuplicateKeyException;
 
