@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -87,27 +89,31 @@ public class UserServiceTest {
 	@Test
 	@DirtiesContext
 	public void ugradeLevels() throws Exception {
-		userDao.deleteAll();
-
-		for (User user : users) {
-			userDao.add(user);
-		}
+		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		
+		MockUserDao mockUserDao = new MockUserDao(this.users);
+		userServiceImpl.setUserDao(mockUserDao);
 		
 		MockMailSender mockMailSender = new MockMailSender();
 		userServiceImpl.setMailSender(mockMailSender);
 
-		userService.upgradeLevels();
-
-		checkLevel(users.get(0), false);
-		checkLevel(users.get(1), true);
-		checkLevel(users.get(2), false);
-		checkLevel(users.get(3), true);
-		checkLevel(users.get(4), false);
+		userServiceImpl.upgradeLevels();
+		
+		List<User> updated = mockUserDao.getUpdated();  
+		
+		assertThat(updated.size(), is(2));
+		checkUserAndLevel(updated.get(0), "user2", Level.SILVER);
+		checkUserAndLevel(updated.get(1), "user4", Level.GOLD);
 		
 		List<String> requests = mockMailSender.getRequests();
 		assertThat(requests.size(), is(2));
 		assertThat(requests.get(0), is(users.get(1).getEmail()));
 		assertThat(requests.get(1), is(users.get(3).getEmail()));
+	}
+
+	private void checkUserAndLevel(User updated, String expectedId, Level expectedLevel) {
+		assertThat(updated.getId(), is(expectedId));
+		assertThat(updated.getLevel(), is(expectedLevel));
 	}
 
 	@Test
@@ -158,5 +164,50 @@ public class UserServiceTest {
 		} else {
 			assertThat(userUpdate.getLevel(), is(user.getLevel()));
 		}
+	}
+	
+	static class MockUserDao implements UserDao {
+		private List<User> users;	// level upgrade 후보 User Object list
+		private List<User> updated = new ArrayList();
+		
+		private MockUserDao(List<User> users) {
+			this.users = users;
+		}
+		
+		public List<User> getUpdated() {
+			return this.updated;
+		}
+		
+		@Override
+		public List<User> getAll() {
+			return this.users;
+		}
+
+		@Override
+		public void update(User user) {
+			this.updated.add(user);
+		}
+		
+		
+		@Override
+		public void add(User user) throws DuplicateKeyException {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public User get(String id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void deleteAll() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int getCount() {
+			throw new UnsupportedOperationException();
+		}
+
 	}
 }
