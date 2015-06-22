@@ -1,7 +1,7 @@
 package com.mykumi.springlab.chat01.user.service;
 
-import static com.mykumi.springlab.chat01.user.service.UserService.MIN_LOGINCOUNT_FOR_SILVER;
-import static com.mykumi.springlab.chat01.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
+import static com.mykumi.springlab.chat01.user.service.UserServiceImpl.MIN_LOGINCOUNT_FOR_SILVER;
+import static com.mykumi.springlab.chat01.user.service.UserServiceImpl.MIN_RECOMMEND_FOR_GOLD;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -31,6 +31,9 @@ import com.mykumi.springlab.chat01.user.service.TestUserService.TestUserServiceE
 public class UserServiceTest {
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
 
 	@Autowired
 	PlatformTransactionManager transactionManager;
@@ -91,7 +94,7 @@ public class UserServiceTest {
 		}
 		
 		MockMailSender mockMailSender = new MockMailSender();
-		userService.setMailSender(mockMailSender);
+		userServiceImpl.setMailSender(mockMailSender);
 
 		userService.upgradeLevels();
 
@@ -127,17 +130,21 @@ public class UserServiceTest {
 
 	@Test
 	public void upgradeAllOrNothing() throws Exception {
-		UserService testUserService = new TestUserService(users.get(3).getId());
+		UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
 		testUserService.setUserDao(this.userDao);
-		testUserService.setTransactionManager(this.transactionManager);
 		testUserService.setMailSender(mailSender);
+		
+		UserServiceTx txUserService = new UserServiceTx();
+		txUserService.setUserService(testUserService);
+		txUserService.setTransactionManager(transactionManager);
+	
 		userDao.deleteAll();
 
 		for (User user : users)
 			userDao.add(user);
 
 		try {
-			testUserService.upgradeLevels();
+			txUserService.upgradeLevels();
 			fail("TestUserServiceException expected");
 		} catch (TestUserServiceException e) {
 		}

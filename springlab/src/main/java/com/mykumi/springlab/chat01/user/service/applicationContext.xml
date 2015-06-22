@@ -14,11 +14,16 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 		
-	<bean id="userService" class="com.mykumi.springlab.chat01.user.service.UserService">
-		<property name="userDao" ref="userDao"></property>
+	<bean id="userService" class="com.mykumi.springlab.chat01.user.service.UserServiceTx">
 		<property name="transactionManager" ref="transactionManager"></property>
+		<property name="userService" ref="userServiceImpl"></property>
+	</bean>
+	
+	<bean id="userServiceImpl" class="com.mykumi.springlab.chat01.user.service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
 		<property name="mailSender" ref="mailSender"></property>
 	</bean>
+	
 	<bean id="userDao" class="com.mykumi.springlab.chat01.UserDaoJdbc">
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>

@@ -2,7 +2,7 @@ package com.mykumi.springlab.chat01.user.service;
 
 import com.mykumi.springlab.chat01.User;
 
-public class TestUserService extends UserService {
+public class TestUserService extends UserServiceImpl {
 	private String id;
 
 	public TestUserService(String id) {
