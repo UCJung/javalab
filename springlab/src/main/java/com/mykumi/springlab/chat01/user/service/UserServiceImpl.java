@@ -3,10 +3,6 @@ package com.mykumi.springlab.chat01.user.service;
 import java.util.List;
 
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.mykumi.springlab.chat01.Level;
 import com.mykumi.springlab.chat01.User;
