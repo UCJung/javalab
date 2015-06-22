@@ -36,6 +36,9 @@ public class UserServiceTest {
 
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	MailSender mailSender;
 
 	List<User> users;
 
@@ -117,6 +120,7 @@ public class UserServiceTest {
 		UserService testUserService = new TestUserService(users.get(3).getId());
 		testUserService.setUserDao(this.userDao);
 		testUserService.setTransactionManager(this.transactionManager);
+		testUserService.setMailSender(mailSender);
 		userDao.deleteAll();
 
 		for (User user : users)
