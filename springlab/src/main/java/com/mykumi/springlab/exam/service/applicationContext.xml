@@ -14,9 +14,11 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 		
-	<bean id="userService" class="com.mykumi.springlab.exam.service.UserServiceTx">
+	<bean id="userService" class="com.mykumi.springlab.exam.service.TxProxyFactoryBean">
+		<property name="target" ref="userServiceImpl"></property>
 		<property name="transactionManager" ref="transactionManager"></property>
-		<property name="userService" ref="userServiceImpl"></property>
+		<property name="pattern" value="upgradeLevels"></property>
+		<property name="serviceInterface" value="com.mykumi.springlab.exam.service.UserService"></property>
 	</bean>
 	
 	<bean id="userServiceImpl" class="com.mykumi.springlab.exam.service.UserServiceImpl">

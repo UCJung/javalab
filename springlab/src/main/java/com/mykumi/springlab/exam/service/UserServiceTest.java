@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.test.annotation.DirtiesContext;
@@ -35,6 +36,9 @@ import com.mykumi.springlab.exam.service.TestUserService.TestUserServiceExceptio
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/com/mykumi/springlab/exam/service/applicationContext.xml")
 public class UserServiceTest {
+	@Autowired
+	ApplicationContext context;
+	
 	@Autowired
 	UserService userService;
 	
@@ -166,21 +170,17 @@ public class UserServiceTest {
 	}
 
 	@Test
+	@DirtiesContext
 	public void upgradeAllOrNothing() throws Exception {
-		UserServiceImpl testUserService = new TestUserService(users.get(3).getId());
+		TestUserService testUserService = new TestUserService(users.get(3).getId());
 		testUserService.setUserDao(this.userDao);
 		testUserService.setMailSender(mailSender);
 		
-		TransactionHandler txHandler = new TransactionHandler();
-		txHandler.setTransactionManager(transactionManager);
-		txHandler.setTarget(testUserService);
-		txHandler.setPattern("upgradeLevels");
+		TxProxyFactoryBean txProxyFactoryBean = context.getBean("&userService", TxProxyFactoryBean.class);
+		txProxyFactoryBean.setTarget(testUserService);
 		
-		UserService txUserService = (UserService)Proxy.newProxyInstance(
-				getClass().getClassLoader(), 
-				new Class[] { UserService.class }, 
-				txHandler);
-		
+		UserService txUserService = (UserService) txProxyFactoryBean.getObject();
+
 		userDao.deleteAll();
 
 		for (User user : users)
