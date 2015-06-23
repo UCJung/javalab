@@ -14,11 +14,13 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 		
-	<bean id="userService" class="com.mykumi.springlab.exam.service.TxProxyFactoryBean">
+	<bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="target" ref="userServiceImpl"></property>
-		<property name="transactionManager" ref="transactionManager"></property>
-		<property name="pattern" value="upgradeLevels"></property>
-		<property name="serviceInterface" value="com.mykumi.springlab.exam.service.UserService"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionAdvisor</value>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="userServiceImpl" class="com.mykumi.springlab.exam.service.UserServiceImpl">
@@ -35,4 +37,18 @@
 	<bean id="mailSender" class="com.mykumi.springlab.exam.service.DummyMailSender">
 		<property name="host" value="mail.server.com"></property>
 	</bean>
+	
+	<bean id="transactionAdvice" class="com.mykumi.springlab.exam.service.TransactionAdvice">
+		<property name="transactionManager" ref="transactionManager"></property>
+	</bean>
+	
+	<bean id="transactionPointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<property name="mappedName" value="upgrade*"></property>
+	</bean>
+	
+	<bean id="transactionAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="transactionAdvice"></property>
+		<property name="pointcut" ref="transactionPointcut"></property>
+	</bean>
+	
 </beans>
