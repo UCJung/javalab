@@ -3,6 +3,9 @@ package com.mykumi.springlab.exam.dynamicproxy;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+
 import org.junit.Test;
 
 public class HelloTest {
@@ -20,6 +23,16 @@ public class HelloTest {
 		assertThat(proxyHello.sayHello("JUNG"),is("HELLO JUNG"));
 		assertThat(proxyHello.sayHi("JUNG"),is("HI JUNG"));
 		assertThat(proxyHello.sayThankYou("JUNG"),is("THANK YOU JUNG"));
+		
+		Hello dynimicProxyHello = (Hello)Proxy.newProxyInstance(
+				getClass().getClassLoader(), 
+				new Class[] { Hello.class }, 
+				new UppercaseHandler(new HelloTarget()));
+		
+		assertThat(dynimicProxyHello.sayHello("JUNG"),is("HELLO JUNG"));
+		assertThat(dynimicProxyHello.sayHi("JUNG"),is("HI JUNG"));
+		assertThat(dynimicProxyHello.sayThankYou("JUNG"),is("THANK YOU JUNG"));
+		
 	}
 
 }
