@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://54.64.47.206/mykumidb"></property>
+		<property name="username" value="dbuser"></property>
+		<property name="password" value="dbuser1*"></property>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+		
+	<bean id="userService" class="com.mykumi.springlab.exam.service.UserServiceTx">
+		<property name="transactionManager" ref="transactionManager"></property>
+		<property name="userService" ref="userServiceImpl"></property>
+	</bean>
+	
+	<bean id="userServiceImpl" class="com.mykumi.springlab.exam.service.UserServiceImpl">
+		<property name="userDao" ref="userDao"></property>
+		<property name="mailSender" ref="mailSender"></property>
+	</bean>
+	
+	<bean id="userDao" class="com.mykumi.springlab.exam.UserDaoJdbc">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="mailSender" class="com.mykumi.springlab.exam.service.DummyMailSender">
+		<property name="host" value="mail.server.com"></property>
+	</bean>
+</beans>
