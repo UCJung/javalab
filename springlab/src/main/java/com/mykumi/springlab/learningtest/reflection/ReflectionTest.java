@@ -1,4 +1,4 @@
-package com.mykumi.springlab.learningtest;
+package com.mykumi.springlab.learningtest.reflection;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
