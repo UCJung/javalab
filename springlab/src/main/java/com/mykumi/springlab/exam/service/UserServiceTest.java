@@ -8,6 +8,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -170,10 +171,16 @@ public class UserServiceTest {
 		testUserService.setUserDao(this.userDao);
 		testUserService.setMailSender(mailSender);
 		
-		UserServiceTx txUserService = new UserServiceTx();
-		txUserService.setUserService(testUserService);
-		txUserService.setTransactionManager(transactionManager);
-	
+		TransactionHandler txHandler = new TransactionHandler();
+		txHandler.setTransactionManager(transactionManager);
+		txHandler.setTarget(testUserService);
+		txHandler.setPattern("upgradeLevels");
+		
+		UserService txUserService = (UserService)Proxy.newProxyInstance(
+				getClass().getClassLoader(), 
+				new Class[] { UserService.class }, 
+				txHandler);
+		
 		userDao.deleteAll();
 
 		for (User user : users)
