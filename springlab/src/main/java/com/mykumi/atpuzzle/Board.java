@@ -14,12 +14,11 @@ public class Board {
 		map = new Block[mapHeight][mapWidth];
 	}
 	
-	private boolean initMap() {
-		
+	public boolean initMap() {
 		return true;
 	}
 	
-	private void clearMap() {
+	public void clearMap() {
 		for (int i = 0 ; i < this.mapHeight ; i ++) {
 			
 		}
