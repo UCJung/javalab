@@ -1,4 +1,4 @@
-package com.mykumi.atpuzzle;
+package com.mykumi.atpuzzle.boardmodel;
 
 import java.util.Random;
 
@@ -20,7 +20,7 @@ public class Board {
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		
-		map = new Block[mapHeight][mapWidth];
+		map = new Block[mapWidth][mapHeight];
 		
 		this.initMap();
 	}
@@ -30,31 +30,31 @@ public class Board {
 	}
 	
 	public void clearMap() {
-		for (int i = 0 ; i < this.mapHeight ; i ++)
-			for (int j = 0 ; j < this.mapWidth ; j ++) 
-				map[i][j] = new EmptyBlock();
+		for (int y = 0 ; y < this.mapHeight ; y ++)
+			for (int x = 0 ; x < this.mapWidth ; x ++) 
+				map[x][y] = new EmptyBlock();
 	}
 	
 	public void redraw() {
-		for (int i = 0 ; i < this.mapHeight ; i ++){
-			for (int j = 0 ; j < this.mapWidth ; j ++) {
-				map[i][j].display();
+		for (int y = 0 ; y < this.mapHeight ; y ++){
+			for (int x = 0 ; x < this.mapWidth ; x ++) {
+				map[x][y].display();
 			}
 			System.out.println("");
 		}
 	}
 	
 	public void createDefenceLine() {
-		for (int i = 0 ; i < this.mapWidth ; i++) {
-			for (int j = 0 ; j < this.mapHeight - 1 ; j++) {
-				Block block = map[j+1][i];
+		for (int x = 0 ; x < this.mapWidth ; x++) {
+			for (int y = 0 ; y < this.mapHeight - 1 ; y++) {
+				Block block = map[x][y+1];
 				if (block.getBlockType() != BlockType.Empty) {
-					map[j][i] = new DefendBlock();
+					map[x][y] = new DefendBlock();
 					break;
 				}
 				
-				if ( j == this.mapHeight - 2) {
-					map[j+1][i] = new DefendBlock();
+				if ( y == this.mapHeight - 2) {
+					map[x][y+1] = new DefendBlock();
 					break;					
 				}
 			}
@@ -64,7 +64,7 @@ public class Board {
 	public void setAttacker(Block attackBlock) {
 		this.attackPositionX = new Random().nextInt(mapWidth - 1);
 		this.attackPositionY = 0;
-		map[this.attackPositionY][this.attackPositionX] = attackBlock;
+		map[this.attackPositionX][this.attackPositionY] = attackBlock;
 	}
 
 	public void AttackerMoveLeft() {
@@ -82,9 +82,9 @@ public class Board {
 	}	
 	
 	private void exChangePosition(int sourceX, int sourceY, int targetX, int targetY) {
-		Block temp = map[targetY][targetX];
-		map[targetY][targetX] = map[sourceY][sourceX];
-		map[sourceY][sourceX] = temp;		
+		Block temp = map[targetX][targetY];
+		map[targetX][targetY] = map[sourceX][sourceY];
+		map[sourceX][sourceY] = temp;		
 	}
 
 	public void attack() {
@@ -98,9 +98,9 @@ public class Board {
 	}
 
 	private int calculateAttackPoint(int attackPointX, int attackPointY) {
-		for (int i = 0 ; i < mapHeight ; i++) {
-			if (map[i][attackPointX].getBlockType() == BlockType.Defend) {
-				attackPointY = i;
+		for (int y = 0 ; y < mapHeight ; y++) {
+			if (map[attackPointX][y].getBlockType() == BlockType.Defend) {
+				attackPointY = y;
 				break;
 			}
 		}
@@ -109,14 +109,14 @@ public class Board {
 
 	// 공격에 대한 처리 수행
 	private void attackProcess(int attackPointX, int attackPointY) {
-		map[attackPositionY][attackPositionX] = new EmptyBlock();		
+		map[attackPositionX][attackPositionY] = new EmptyBlock();		
 
 		// attack process 
-		for (int i = attackPointY - 1 ; i < attackPointY + 2 ; i ++) {
-			if ( i < 0 || i >= mapHeight) continue;
-			for (int j = attackPointX - 1 ; j < attackPointX + 2 ; j ++) {
-				if ( j < 0 || j >= mapWidth) continue;
-				map[i][j] = new EmptyBlock();
+		for (int y = attackPointY - 1 ; y < attackPointY + 2 ; y ++) {
+			if ( y < 0 || y >= mapHeight) continue;
+			for (int x = attackPointX - 1 ; x < attackPointX + 2 ; x ++) {
+				if ( x < 0 || x >= mapWidth) continue;
+				map[x][y] = new EmptyBlock();
 			}
 		}
 	}
@@ -128,11 +128,11 @@ public class Board {
 		int startY = mapHeight - 2;
 		int scope = 3; // Attack의 영향범위
 		for (int k = 0 ; k < scope ; k ++) {
-			for (int i = startY ; i >= 0 ; i --) {
-				for (int j = startX ; j < mapWidth ; j ++) {
-					if (map[i][j].getBlockType() != BlockType.Empty 
-							&& map[i+1][j].getBlockType() == BlockType.Empty) {
-						exChangePosition(j, i, j, i+1);
+			for (int y = startY ; y >= 0 ; y --) {
+				for (int x = startX ; x < mapWidth ; x ++) {
+					if (map[x][y].getBlockType() != BlockType.Empty 
+							&& map[x][y+1].getBlockType() == BlockType.Empty) {
+						exChangePosition(x, y, x, y+1);
 					}
 				}
 			}
