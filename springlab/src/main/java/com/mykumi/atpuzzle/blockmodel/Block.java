@@ -18,6 +18,10 @@ public abstract class Block {
 		this.position.setY(y);
 	}
 	
+	public void setPosition(Position p) {
+		this.position = p;
+	}
+	
 	public Position getPosition() {
 		return this.position;
 	}
