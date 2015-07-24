@@ -11,5 +11,9 @@ public enum AttackType {
 	
 	public int getValue() {
 		return this.value;
-	}	
+	}
+	
+   public static AttackType fromValue(int value) {
+	   return AttackType.values()[value];
+   }	
 }
