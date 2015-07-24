@@ -1,8 +1,8 @@
 package com.mykumi.atpuzzle.blockmodel;
 
-public class DefendBlock extends Block {
+public class DefenceBlock extends Block {
 
-	public DefendBlock() {
+	public DefenceBlock() {
 		this.blockType = BlockType.Defend;
 	}
 	
