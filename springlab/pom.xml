@@ -16,10 +16,20 @@
 	<dependencies>
 		<!-- HTML Parse  -->
 		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.7.2</version>
 		</dependency>
+		<dependency>
+		        <groupId>org.apache.httpcomponents</groupId>
+		        <artifactId>httpcore</artifactId>
+		        <version>4.3.3</version>
+		</dependency>		
 		<dependency>
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-core</artifactId>
