@@ -1,17 +1,21 @@
 package com.mykumi.crawler4j.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Product {
 	private String productNumber;
 	private String categoryNumber;
 	private String productName;
 	private String productImage;
-	private String sellPrice;
-	private String discountPrice;
+	private float sellPrice;
+	private float discountPrice;
 	private List<ProductOption> options;
 	private List<ProductImage> images;
-	private List<ProductDetail> detailInfo;
+	private Map<String, String> detailInfos;
 	
 	public String getProductName() {
 		return productName;
@@ -34,7 +38,7 @@ public class Product {
 		this.productImage = productImage;
 		return this;
 	}
-	public String getSellPrice() {
+	public float getSellPrice() {
 		return sellPrice;
 	}
 	public Product setSellPrice(String sellPrice) {
@@ -62,18 +66,28 @@ public class Product {
 		this.images = images;
 		return this;
 	}
-	public List<ProductDetail> getDetailInfo() {
-		return detailInfo;
-	}
-	public Product setDetailInfo(List<ProductDetail> detailInfo) {
-		this.detailInfo = detailInfo;
-		return this;
-	}
+
 	public String getCategoryNumber() {
 		return categoryNumber;
 	}
 	public Product setCategoryNumber(String categoryNumber) {
 		this.categoryNumber = categoryNumber;
+		return this;
+	}
+	
+	public Product addOption(ProductOption productOption) {
+		if ( options == null ) {
+			options = new ArrayList<ProductOption>();
+		}
+		options.add(productOption);
+		return this;
+	}
+	
+	public Product addDetailInfo(String key, String value) {
+		if ( detailInfos == null ) {
+			detailInfos = new HashMap<String, String>();
+		}
+		detailInfos.put(key, value);
 		return this;
 	}
 }

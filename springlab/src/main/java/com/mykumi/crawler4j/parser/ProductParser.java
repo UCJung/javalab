@@ -1,5 +1,6 @@
 package com.mykumi.crawler4j.parser;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -15,19 +16,24 @@ public abstract class ProductParser {
 	protected URL url;
 	protected Document doc;
 	protected Product product;
+	protected Map<String, String> mapQueryParams;
 	
 	public ProductParser(String html, String url) throws MalformedURLException {
 		this.html = html;
 		this.doc = Jsoup.parse(html);
 		this.url = new URL(url);
+		this.mapQueryParams = parseQueryString(this.url);
 	}
-
+	
 	public abstract boolean parseBasicInfo();
 	public abstract boolean parseDetailInfo();
 	public abstract boolean parseOptionInfo();
 	public abstract boolean parseContentInfo();
 	
 	public Product parse() {
+		if (product == null) {
+			product = new Product();
+		}
 		this.parseBasicInfo();
 		this.parseDetailInfo();
 		this.parseOptionInfo();
