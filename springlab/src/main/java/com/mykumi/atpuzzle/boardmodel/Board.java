@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import com.mykumi.atpuzzle.blockmodel.Block;
 import com.mykumi.atpuzzle.blockmodel.BlockType;
-import com.mykumi.atpuzzle.blockmodel.DefendBlock;
+import com.mykumi.atpuzzle.blockmodel.DefenceBlock;
 import com.mykumi.atpuzzle.blockmodel.EmptyBlock;
 
 public class Board {
@@ -49,12 +49,12 @@ public class Board {
 			for (int y = 0 ; y < this.mapHeight - 1 ; y++) {
 				Block block = map[x][y+1];
 				if (block.getBlockType() != BlockType.Empty) {
-					map[x][y] = new DefendBlock();
+					map[x][y] = new DefenceBlock();
 					break;
 				}
 				
 				if ( y == this.mapHeight - 2) {
-					map[x][y+1] = new DefendBlock();
+					map[x][y+1] = new DefenceBlock();
 					break;					
 				}
 			}

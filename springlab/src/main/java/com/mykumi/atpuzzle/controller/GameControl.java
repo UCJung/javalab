@@ -9,6 +9,12 @@ import com.mykumi.atpuzzle.blockmodel.Block;
 import com.mykumi.atpuzzle.boardmodel.Board;
 
 public class GameControl {
+	private BoardControl boardControl;
+	private BoardMapControl boardMapControl;
+	private Queue<Block> nextAttackers = new LinkedList<Block>();
+	
+	
+	/*
 	private Board board = new Board(5, 10);
 	private Queue<Block> nextAttackers = new LinkedList<Block>();
 	private Block currentAttacker;
@@ -64,4 +70,5 @@ public class GameControl {
 			this.nextAttackers.add(new AttackBlock());
 		}
 	}
+	*/
 }
