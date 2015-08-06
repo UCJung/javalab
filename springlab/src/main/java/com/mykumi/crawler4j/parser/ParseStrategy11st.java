@@ -67,8 +67,6 @@ public final class ParseStrategy11st implements ParseStrategy {
 			Products.add(product);
 		}
 		
-		System.out.println("상품수 : " + Products.size());
-		
 		try {
 			return JsonUtil.marshallingJson(Products);
 		} catch (Exception e) {
