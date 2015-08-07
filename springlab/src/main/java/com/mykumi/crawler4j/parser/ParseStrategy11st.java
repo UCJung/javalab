@@ -1,23 +1,18 @@
 package com.mykumi.crawler4j.parser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.mykumi.crawler4j.ParseWebPageTest;
 import com.mykumi.util.JsonUtil;
 
 public final class ParseStrategy11st implements ParseStrategy {
 
 	@Override
 	public String parsePage(Document page) {
-		List<Map<String, String>> Products = new ArrayList<Map<String,String>>();
-		
 		Elements eleProducts = page.select("#product_listing > .type_listing > ul > li");
 		
 		for (Element eleProduct : eleProducts) {
@@ -64,11 +59,11 @@ public final class ParseStrategy11st implements ParseStrategy {
 				product.put("delivery", eleDelivery.first().text());
 			}
 			
-			Products.add(product);
+			products.add(product);
 		}
 		
 		try {
-			return JsonUtil.marshallingJson(Products);
+			return JsonUtil.marshallingJson(products);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

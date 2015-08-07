@@ -198,7 +198,12 @@
 		     <artifactId>mockito-core</artifactId>
 		     <version>1.9.5</version>
 		     <scope>test</scope>
-		 </dependency>			       
+		</dependency>	
+		<dependency>
+	        <groupId>am.ik.aws</groupId>
+	        <artifactId>aws-apa</artifactId>
+	        <version>0.9.5</version>
+    	</dependency>
 	</dependencies>
     <build>
         <plugins>
