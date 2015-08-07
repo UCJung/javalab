@@ -59,6 +59,7 @@ public class ItemSearch {
 	}
 
     private static String parse(String requestUrl) {
+    	System.out.println(requestUrl);
 		request(requestUrl);
 		
 		NodeList Items = doc.getElementsByTagName("Item");
@@ -87,9 +88,11 @@ public class ItemSearch {
 			
 			// 가격정보
 			Node offers = getNameNode(item, "Offers");
-			if (itemAttributes != null) {
+			if (offers != null) {
 				Node offerListing = getNameNode(offers, "OfferListing");
+				if (offerListing == null) continue;
 				Node price = getNameNode(offerListing, "Price");
+				if ( price == null ) continue;
 				product.put("currency", getNameNode(price, "CurrencyCode").getTextContent());
 				product.put("priceSale", getNameNode(price, "FormattedPrice").getTextContent().replaceAll("[^0-9\\.]", ""));
 				

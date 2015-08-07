@@ -11,8 +11,8 @@ public class Product {
 	private String categoryNumber;
 	private String productName;
 	private String productImage;
-	private float sellPrice;
-	private float discountPrice;
+	private String sellPrice;
+	private String discountPrice;
 	private List<ProductOption> options;
 	private List<ProductImage> images;
 	private Map<String, String> detailInfos;
@@ -38,7 +38,7 @@ public class Product {
 		this.productImage = productImage;
 		return this;
 	}
-	public float getSellPrice() {
+	public String getSellPrice() {
 		return sellPrice;
 	}
 	public Product setSellPrice(String sellPrice) {
